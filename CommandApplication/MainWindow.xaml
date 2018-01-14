@@ -1,0 +1,20 @@
+﻿<Window x:Class="CommandApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:cef="clr-namespace:CefSharp;assembly=CefSharp.Core"
+        
+        xmlns:local="clr-namespace:CommandApplication"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="Command Center Application">
+    <Grid>
+        <Button Content="Open window 1" HorizontalAlignment="Left" Margin="83,82,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click" RenderTransformOrigin="1.403,0.946"/>
+        <Button Content="Open window 2" HorizontalAlignment="Left" Margin="83,131,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click_1" RenderTransformOrigin="1.089,-0.219"/>
+        <Image x:Name="mapImage" HorizontalAlignment="Left" Height="297" Margin="83,182,0,0" VerticalAlignment="Top" Width="637"/>
+        <!--<WebBrowser x:Name="mapNavi" HorizontalAlignment="Left" Height="183" Margin="399,182,0,0" VerticalAlignment="Top" Width="321"/>-->
+        
+    </Grid>
+</Window>
