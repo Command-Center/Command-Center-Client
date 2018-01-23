@@ -27,20 +27,29 @@ namespace CommandApplication
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            NewMethod();
-
+            NewMethod(this);
+            
         }
 
-        private static async Task NewMethod()
+        private static async Task NewMethod(SensorWindow window)
         {
             ClientWebSocket socket = new ClientWebSocket();
             Uri uri = new Uri("ws://129.242.174.142:8080/temp");
-
-            await socket.ConnectAsync(uri, System.Threading.CancellationToken.None);
+            try
+            {
+                await socket.ConnectAsync(uri, System.Threading.CancellationToken.None);
+            } catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+                window.serverStatus.Text = e.Message;
+                
+            }
+            
             var buffer = new byte[1024];
             var segment = new ArraySegment<byte>(buffer);
             var res = await socket.ReceiveAsync(segment, System.Threading.CancellationToken.None);
             System.Diagnostics.Trace.WriteLine("Resultatet er: " + res);
         }
+
     }
 }
