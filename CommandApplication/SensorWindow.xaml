@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         WindowState="Maximized">
     <Grid>
-        <TextBox Name="serverStatus" HorizontalAlignment="Left" Height="23" Margin="243,87,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Name="serverStatus" Content="Label" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="32" Width="451" FontSize="18" FontWeight="Bold" Background="#FFFBF7F7" Foreground="#FFEE1616"/>
     </Grid>
 </Window>

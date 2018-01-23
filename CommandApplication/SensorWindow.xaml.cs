@@ -24,6 +24,7 @@ namespace CommandApplication
         {
             InitializeComponent();
             string curDir = System.IO.Directory.GetCurrentDirectory();
+            //this.serverStatus.Visibility = Visibility.Hidden;
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
@@ -41,7 +42,8 @@ namespace CommandApplication
             } catch (Exception e)
             {
                 System.Diagnostics.Trace.WriteLine(e.Message);
-                window.serverStatus.Text = e.Message;
+                window.serverStatus.Name = e.Message;
+                window.serverStatus.Visibility = Visibility.Visible;
                 
             }
             
