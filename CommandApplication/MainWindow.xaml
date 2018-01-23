@@ -11,8 +11,8 @@
         WindowState="Maximized"
         Title="Command Center Application">
     <Grid>
-        <Button Content="Open window 1" HorizontalAlignment="Left" Margin="83,82,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click" RenderTransformOrigin="1.403,0.946"/>
-        <Button Content="Open window 2" HorizontalAlignment="Left" Margin="83,131,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click_1" RenderTransformOrigin="1.089,-0.219"/>
+        <Button Content="Sensor Data" HorizontalAlignment="Left" Margin="83,82,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click" RenderTransformOrigin="1.403,0.946"/>
+        <Button Content="Map" HorizontalAlignment="Left" Margin="83,131,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click_1" RenderTransformOrigin="1.089,-0.219"/>
         <Image x:Name="mapImage" HorizontalAlignment="Left" Height="297" Margin="83,182,0,0" VerticalAlignment="Top" Width="637"/>
         <!--<WebBrowser x:Name="mapNavi" HorizontalAlignment="Left" Height="183" Margin="399,182,0,0" VerticalAlignment="Top" Width="321"/>-->
         

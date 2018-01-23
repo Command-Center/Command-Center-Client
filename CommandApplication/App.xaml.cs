@@ -21,6 +21,7 @@ namespace CommandApplication
             base.OnStartup(e);
 
             MainWindow mainWindow = new MainWindow();
+            
             System.Diagnostics.Trace.WriteLine(Screen.AllScreens.Length);
             if (Screen.AllScreens.Length > 1)
             {
@@ -37,9 +38,12 @@ namespace CommandApplication
             {
                 Screen s1 = Screen.AllScreens[0];
                 Rectangle r1 = s1.WorkingArea;
+                mainWindow.WindowState = WindowState.Normal;
+                mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
                 mainWindow.Top = r1.Top;
                 mainWindow.Left = r1.Left;
                 mainWindow.Show();
+                mainWindow.WindowState = WindowState.Maximized;
             }
 
         }

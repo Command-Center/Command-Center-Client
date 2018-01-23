@@ -2,6 +2,7 @@
 using Google.Maps.StaticMaps;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CommandApplication
 {
@@ -45,14 +46,58 @@ namespace CommandApplication
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var video = new VideoWindow();
-            video.Show();
+            SensorWindow sensorWindow = new SensorWindow();
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen s2 = Screen.AllScreens[0];
+                Rectangle r2 = s2.WorkingArea;
+                sensorWindow.WindowState = WindowState.Normal;
+                sensorWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+                sensorWindow.Top = r2.Top;
+                sensorWindow.Left = r2.Left;
+                sensorWindow.Show();
+                sensorWindow.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                sensorWindow.Show();
+                //Screen s1 = Screen.AllScreens[0];
+                //Rectangle r1 = s1.WorkingArea;
+                //videoWindow.WindowState = WindowState.Normal;
+                //videoWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+                //videoWindow.Top = r1.Top;
+                //videoWindow.Left = r1.Left;
+                //videoWindow.Show();
+                //videoWindow.WindowState = WindowState.Maximized;
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var sensor = new SensorWindow();
-            sensor.Show();
+            MapWindow mapWindow = new MapWindow();
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen s2 = Screen.AllScreens[1];
+                Rectangle r2 = s2.WorkingArea;
+                mapWindow.WindowState = WindowState.Normal;
+                mapWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+                mapWindow.Top = r2.Top;
+                mapWindow.Left = r2.Left;
+                mapWindow.Show();
+                mapWindow.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                mapWindow.Show();
+                //Screen s1 = Screen.AllScreens[0];
+                //Rectangle r1 = s1.WorkingArea;
+                //sensorWindow.WindowState = WindowState.Normal;
+                //sensorWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+                //sensorWindow.Top = r1.Top;
+                //sensorWindow.Left = r1.Left;
+                //sensorWindow.Show();
+                //sensorWindow.WindowState = WindowState.Maximized;
+            }
         }
     }
 }
