@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowState="Maximized">
     <Grid>
-        <Label Name="serverStatus" Content="Label" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="32" Width="451" FontSize="18" FontWeight="Bold" Background="#FFFBF7F7" Foreground="#FFEE1616"/>
+        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
+        <ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>
     </Grid>
 </Window>
