@@ -20,7 +20,9 @@ namespace CommandApplication
     /// </summary>
     public partial class SensorWindow : Window
     {
-        
+        private static string START = "START";
+        private static string STOP = "STOP";
+        private const string URL_TEMP = "ws://129.242.174.142:8080/temp";
 
         public SensorWindow()
         {
@@ -40,7 +42,7 @@ namespace CommandApplication
             
             bool receiving = false;
             int count = 0;
-            Uri uri = new Uri("ws://129.242.174.142:8080/temp");
+            Uri uri = new Uri(URL_TEMP);
 
             try
             {
@@ -60,6 +62,9 @@ namespace CommandApplication
             var recvSeg = new ArraySegment<byte>(recvBuf);
 
             var sendBuf = new byte[16];
+            
+            sendBuf = GetBytes(START); //Stygg hack
+            
             var sendSeg = new ArraySegment<byte>(sendBuf);
 
             await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
@@ -72,7 +77,7 @@ namespace CommandApplication
                 resultArray = window.RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
                 count++;
-                if(count > 10)
+                if(count > 100)
                 {
                     receiving = false;
                 }
@@ -84,6 +89,13 @@ namespace CommandApplication
 
             
         }
+        static byte[] GetBytes(string str)
+        {
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+            Byte[] bytes = encoding.GetBytes(str);
+            return bytes;
+        }
+
         private byte[] RemoveTrailingZeros(byte[] input)
         {
             int res = 0;
