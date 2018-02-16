@@ -23,22 +23,24 @@ namespace CommandApplication
         private static string START = "START";
         private static string STOP = "STOP";
         private const string URL_TEMP = "ws://129.242.174.142:8080/temp";
+        ClientWebSocket socket;
 
         public SensorWindow()
         {
             InitializeComponent();
+            socket = new ClientWebSocket();
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            NewMethod(this);
+            StartReceiveTemp(this, socket);
             
         }
 
-        private static async Task NewMethod(SensorWindow window)
+        private static async Task StartReceiveTemp(SensorWindow window, ClientWebSocket socket)
         {
-            ClientWebSocket socket = new ClientWebSocket();
+            
             
             bool receiving = false;
             int count = 0;
@@ -84,10 +86,13 @@ namespace CommandApplication
                 //System.Diagnostics.Trace.WriteLine("Resultatet er: " + stringResult.ToString() + "\n");
                 window.listTemp.Items.Add(stringResult.ToString());
             }
-            
-
-
-            
+        }
+        private static async Task DisconnectFromServer(SensorWindow window, ClientWebSocket socket)
+        {
+            var sendBuf = new byte[16];
+            sendBuf = GetBytes(STOP);
+            var sendSeg = new ArraySegment<byte>(sendBuf);
+            await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
         }
         static byte[] GetBytes(string str)
         {
@@ -109,6 +114,11 @@ namespace CommandApplication
             }
             var output = input.Take(res + 1).ToArray();
             return output;
+        }
+
+        private void Button_Disconnect(object sender, RoutedEventArgs e)
+        {
+            DisconnectFromServer(this, socket);
         }
     }
 }
