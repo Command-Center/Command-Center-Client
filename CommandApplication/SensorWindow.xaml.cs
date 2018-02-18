@@ -1,29 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Net.WebSockets;
 
 namespace CommandApplication
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for SensorWindow.xaml
     /// </summary>
     public partial class SensorWindow : Window
     {
-        private static string START = "START";
-        private static string STOP = "STOP";
-        private const string URL_TEMP = "ws://129.242.174.142:8080/temp";
-        ClientWebSocket socket;
+        private const string Start = "START";
+        private const string Stop = "STOP";
+        private const string UrlTemp = "ws://129.242.174.142:8080/temp";
+        private readonly ClientWebSocket socket;
 
         public SensorWindow()
         {
@@ -44,7 +37,7 @@ namespace CommandApplication
             
             bool receiving = false;
             int count = 0;
-            Uri uri = new Uri(URL_TEMP);
+            Uri uri = new Uri(UrlTemp);
 
             try
             {
@@ -65,7 +58,7 @@ namespace CommandApplication
 
             var sendBuf = new byte[16];
             
-            sendBuf = GetBytes(START); //Stygg hack
+            sendBuf = GetBytes(Start); //HACK
             
             var sendSeg = new ArraySegment<byte>(sendBuf);
 
@@ -76,7 +69,7 @@ namespace CommandApplication
                 string stringResult = "";
                 var result = await socket.ReceiveAsync(recvSeg, System.Threading.CancellationToken.None);
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
-                resultArray = window.RemoveTrailingZeros(resultArray);
+                resultArray = RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
                 count++;
                 if(count > 100)
@@ -90,7 +83,7 @@ namespace CommandApplication
         private static async Task DisconnectFromServer(SensorWindow window, ClientWebSocket socket)
         {
             var sendBuf = new byte[16];
-            sendBuf = GetBytes(STOP);
+            sendBuf = GetBytes(Stop);
             var sendSeg = new ArraySegment<byte>(sendBuf);
             await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
         }
@@ -101,7 +94,7 @@ namespace CommandApplication
             return bytes;
         }
 
-        private byte[] RemoveTrailingZeros(byte[] input)
+        private static byte[] RemoveTrailingZeros(byte[] input)
         {
             int res = 0;
             for(int i=input.Length - 1; i>=0 ; i--)
