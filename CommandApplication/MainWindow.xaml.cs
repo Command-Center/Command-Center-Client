@@ -74,7 +74,7 @@ namespace CommandApplication
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MapWindow mapWindow = new MapWindow();
+            MapWindow mapWindow = new MapWindow(); //TODO CefSharp trenger 32bit. Må ses på.
             if (Screen.AllScreens.Length > 1)
             {
                 Screen s2 = Screen.AllScreens[1];
