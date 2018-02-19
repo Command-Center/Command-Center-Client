@@ -19,41 +19,63 @@ namespace CommandApplication
     {
         private const string Start = "START";
         private const string Stop = "STOP";
-        private const string UrlTemp = "ws://129.242.174.142:8080/temp";
-        private readonly ClientWebSocket socket;
+        private const string UrlBase = "ws://129.242.174.142:8080/";
+        private readonly ClientWebSocket socket_temp;
+        private readonly ClientWebSocket socket_pressure;
+        private readonly ClientWebSocket socket_humidity;
+        private readonly ClientWebSocket socket_orientation;
+        private readonly ClientWebSocket socket_acceleration;
+
+        private const string Temp = "temp";
+        private const string Pressure = "pressure";
+        private const string Humidity = "humidity";
+        private const string Orientation = "orientation";
+        private const string Acceleration = "acceleration";
 
         public SeriesCollection SeriesCollection { get; set; }
-        LineSeries line;
+        static LineSeries line_temp;
+        static LineSeries line_pressure;
+        static LineSeries line_humidity;
 
         public SensorWindow()
         {
             InitializeComponent();
-            socket = new ClientWebSocket();
+            socket_temp = new ClientWebSocket();
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
 
-            line = new LineSeries
+            line_temp = new LineSeries
             {
                 Title = "Temperature",
-                Values = new ChartValues<double> { 0 }
+                Values = new ChartValues<double> {  }
             };
-                
-            
-            myChart.Series.Add(line);
+            line_pressure = new LineSeries
+            {
+                Title = "Pressure",
+                Values = new ChartValues<double> {  }
+            };
+            line_humidity = new LineSeries
+            {
+                Title = "Humidity",
+                Values = new ChartValues<double> {  }
+            };
+
+
+            tempChart.Series.Add(line_temp);
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            StartReceiveTemp(this, socket);
+            StartReceiveFromServer(this, socket_temp, Temp);
             
         }
 
-        private static async Task StartReceiveTemp(SensorWindow window, ClientWebSocket socket)
+        private static async Task StartReceiveFromServer(SensorWindow window, ClientWebSocket socket, string measurement)
         {
-            
+            var line = GetLines(measurement);
             
             bool receiving = false;
             int count = 0;
-            Uri uri = new Uri(UrlTemp);
+            Uri uri = new Uri(UrlBase + measurement);
 
             try
             {
@@ -87,19 +109,31 @@ namespace CommandApplication
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
                 resultArray = RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
-                count++;
-                if(count > 10) //TODO: Kan fjernes
-                {
-                    receiving = false;
-                }
-                //System.Diagnostics.Trace.WriteLine("Resultatet er: " + stringResult.ToString() + "\n");
-                window.listTemp.Items.Add(stringResult.ToString());
-                window.line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                
+                //window.listTemp.Items.Add(stringResult.ToString());
+                line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
                 
                 //System.Diagnostics.Trace.WriteLine(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
             }
         }
-        private static async Task DisconnectFromServer(SensorWindow window, ClientWebSocket socket)
+
+        private static LineSeries GetLines(string measurement)
+        {
+            switch(measurement)
+            {
+                case Temp:
+                    return line_temp;
+                case Pressure:
+                    return line_pressure;
+                case Humidity:
+                    return line_humidity;
+                default:
+                    return null;
+            }
+            
+        }
+
+        private static async Task DisconnectFromServer(SensorWindow window, ClientWebSocket socket, string measurement)
         {
             var sendBuf = new byte[16];
             sendBuf = GetBytes(Stop);
@@ -131,7 +165,7 @@ namespace CommandApplication
 
         private void Button_Disconnect(object sender, RoutedEventArgs e)
         {
-            DisconnectFromServer(this, socket);
+            DisconnectFromServer(this, socket_temp, Temp);
         }
     }
 }
