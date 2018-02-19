@@ -33,9 +33,18 @@ namespace CommandApplication
         private const string Acceleration = "acceleration";
 
         public SeriesCollection SeriesCollection { get; set; }
+
         static LineSeries line_temp;
         static LineSeries line_pressure;
         static LineSeries line_humidity;
+        static LineSeries line_orientation;
+        static LineSeries line_acceleration;
+        static LineSeries lineX;
+        static LineSeries lineY;
+        static LineSeries lineZ;
+        static LineSeries line_roll;
+        static LineSeries line_pitch;
+        static LineSeries line_yaw;
 
         public SensorWindow()
         {
@@ -43,6 +52,7 @@ namespace CommandApplication
             socket_temp = new ClientWebSocket();
             socket_pressure = new ClientWebSocket();
             socket_humidity = new ClientWebSocket();
+            socket_acceleration = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
@@ -70,17 +80,32 @@ namespace CommandApplication
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            StartReceiveFromServer(this, socket_pressure, Pressure);
-            StartReceiveFromServer(this, socket_temp, Temp);
-            
-            StartReceiveFromServer(this, socket_humidity, Humidity);
+            //StartReceiveFromServer(this, socket_pressure, Pressure);
+            //StartReceiveFromServer(this, socket_temp, Temp);
+            //StartReceiveFromServer(this, socket_humidity, Humidity);
+
+            StartReceiveFromServer(this, socket_acceleration, Acceleration);
 
         }
 
         private static async Task StartReceiveFromServer(SensorWindow window, ClientWebSocket socket, string measurement)
         {
-            var line = GetLines(measurement);
+            //if(measurement == Orientation)
+            //{
+            //    var lineX = lineX;
+            //    var lineY =
+            //    var lineZ = 
+            //} else if (measurement == Acceleration) {
+            //    var lineRoll = 
+            //}
+            //else
+            //{
+                var line = GetLines(measurement);
+            //}
             
+
+
+            byte[] recvBuf;
             bool receiving = false;
             
             Uri uri = new Uri(UrlBase + measurement);
@@ -98,8 +123,17 @@ namespace CommandApplication
                 window.serverStatus.Content = e.Message;
                 window.serverStatus.Visibility = Visibility.Visible;
                 
-            }   
-            var recvBuf = new byte[32];
+            }
+            
+            if(measurement == Acceleration || measurement == Orientation)
+            {
+                recvBuf = new byte[128];
+            }
+            else
+            {
+                recvBuf = new byte[32];
+            }
+            
             var recvSeg = new ArraySegment<byte>(recvBuf);
 
             var sendBuf = new byte[16];
@@ -110,6 +144,7 @@ namespace CommandApplication
 
             await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
 
+
             while (receiving)
             {
                 string stringResult = "";
@@ -117,12 +152,39 @@ namespace CommandApplication
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
                 resultArray = RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
+                if (measurement == Orientation || measurement == Acceleration)
+                {
+                    var res = SplitXYZ(stringResult);
+                    if(measurement == Orientation)
+                    {
+                        var pitch = res[0]; //TODO: Need to confirm order
+                        var roll = res[1];
+                        var yaw = res[2];
+                        line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
+                        line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
+                        line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+                    }
+                    else //Acceleration
+                    {
+                        var x = res[0];
+                        var y = res[1];
+                        var z = res[2];
+                        lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
+                        lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
+                        lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+
+                    }
+                }
+                else
+                {
+                    line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                }
                 
-                //window.listTemp.Items.Add(stringResult.ToString());
-                line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
-                
-                //System.Diagnostics.Trace.WriteLine(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+
+
             }
+            //System.Diagnostics.Trace.WriteLine(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+
         }
 
         private static LineSeries GetLines(string measurement)
@@ -135,6 +197,10 @@ namespace CommandApplication
                     return line_pressure;
                 case Humidity:
                     return line_humidity;
+                case Orientation:
+                    return line_orientation;
+                case Acceleration:
+                    return line_acceleration;
                 default:
                     return null;
             }
@@ -154,6 +220,11 @@ namespace CommandApplication
             ASCIIEncoding encoding = new ASCIIEncoding();
             Byte[] bytes = encoding.GetBytes(str);
             return bytes;
+        }
+        static string[] SplitXYZ(string resString)
+        {
+            var arr = resString.Split(null); //Whitespace split
+            return arr;
         }
 
         private static byte[] RemoveTrailingZeros(byte[] input)
