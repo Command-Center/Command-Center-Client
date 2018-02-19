@@ -41,6 +41,9 @@ namespace CommandApplication
         {
             InitializeComponent();
             socket_temp = new ClientWebSocket();
+            socket_pressure = new ClientWebSocket();
+            socket_humidity = new ClientWebSocket();
+
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
 
@@ -62,11 +65,16 @@ namespace CommandApplication
 
 
             tempChart.Series.Add(line_temp);
+            presChart.Series.Add(line_pressure);
+            humChart.Series.Add(line_humidity);
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
+            StartReceiveFromServer(this, socket_pressure, Pressure);
             StartReceiveFromServer(this, socket_temp, Temp);
             
+            StartReceiveFromServer(this, socket_humidity, Humidity);
+
         }
 
         private static async Task StartReceiveFromServer(SensorWindow window, ClientWebSocket socket, string measurement)
@@ -74,7 +82,7 @@ namespace CommandApplication
             var line = GetLines(measurement);
             
             bool receiving = false;
-            int count = 0;
+            
             Uri uri = new Uri(UrlBase + measurement);
 
             try

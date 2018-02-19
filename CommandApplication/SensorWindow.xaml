@@ -11,12 +11,28 @@
         WindowState="Maximized">
     <Grid>
         <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
-        <ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>
+        <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
         <Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
-        <Grid HorizontalAlignment="Left" Height="100" Margin="439,342,0,0" VerticalAlignment="Top" Width="100">
-            <lvc:CartesianChart x:Name="tempChart" Margin="-66,-230,-360,0" >
+        <StackPanel HorizontalAlignment="Left" Margin="30" VerticalAlignment="Top" Height="1500" Width="2000">
+            <lvc:CartesianChart x:Name="tempChart" Margin="100" Height="200" >
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Celsius"></lvc:Axis>    
+                    <lvc:Axis Title="Celsius"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            <lvc:CartesianChart x:Name="presChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Pressure"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            <lvc:CartesianChart x:Name="humChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Humidity"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
@@ -25,8 +41,8 @@
 
 
             <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
-            
-        </Grid>
+
+        </StackPanel>
 
 
     </Grid>
