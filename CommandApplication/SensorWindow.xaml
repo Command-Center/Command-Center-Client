@@ -14,7 +14,7 @@
         <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
         <Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
         <StackPanel HorizontalAlignment="Left" Margin="30" VerticalAlignment="Top" Height="1500" Width="2000">
-            <lvc:CartesianChart x:Name="tempChart" Margin="100" Height="200" >
+            <!--<lvc:CartesianChart x:Name="tempChart" Margin="100" Height="200" >
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Celsius"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
@@ -37,9 +37,57 @@
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>-->
+            
+            
+            <!--<lvc:CartesianChart x:Name="accXChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="AccX"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-
-
+            <lvc:CartesianChart x:Name="accYChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="AccY"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            <lvc:CartesianChart x:Name="accZChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="AccZ"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>-->
+            <lvc:CartesianChart x:Name="rollChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Roll"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            <lvc:CartesianChart x:Name="pitchChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Pitch"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            <lvc:CartesianChart x:Name="yawChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Yaw"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
             <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
 
         </StackPanel>

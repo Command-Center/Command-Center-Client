@@ -53,6 +53,7 @@ namespace CommandApplication
             socket_pressure = new ClientWebSocket();
             socket_humidity = new ClientWebSocket();
             socket_acceleration = new ClientWebSocket();
+            socket_orientation = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
@@ -73,10 +74,49 @@ namespace CommandApplication
                 Values = new ChartValues<double> {  }
             };
 
+            lineX = new LineSeries
+            {
+                Title = "AccX",
+                Values = new ChartValues<double> { }
+            };
+            lineY = new LineSeries
+            {
+                Title = "AccY",
+                Values = new ChartValues<double> { }
+            };
+            lineZ = new LineSeries
+            {
+                Title = "AccZ",
+                Values = new ChartValues<double> { }
+            };
 
-            tempChart.Series.Add(line_temp);
-            presChart.Series.Add(line_pressure);
-            humChart.Series.Add(line_humidity);
+            line_roll = new LineSeries
+            {
+                Title = "Roll",
+                Values = new ChartValues<double> { }
+            };
+            line_pitch = new LineSeries
+            {
+                Title = "Pitch",
+                Values = new ChartValues<double> { }
+            };
+            line_yaw = new LineSeries
+            {
+                Title = "Yaw",
+                Values = new ChartValues<double> { }
+            };
+
+
+            //tempChart.Series.Add(line_temp);
+            //presChart.Series.Add(line_pressure);
+            //humChart.Series.Add(line_humidity);
+            //accXChart.Series.Add(lineX);
+            //accYChart.Series.Add(lineY);
+            //accZChart.Series.Add(lineZ);
+
+            rollChart.Series.Add(line_roll);
+            pitchChart.Series.Add(line_pitch);
+            yawChart.Series.Add(line_yaw);
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
@@ -84,7 +124,9 @@ namespace CommandApplication
             //StartReceiveFromServer(this, socket_temp, Temp);
             //StartReceiveFromServer(this, socket_humidity, Humidity);
 
-            StartReceiveFromServer(this, socket_acceleration, Acceleration);
+            //StartReceiveFromServer(this, socket_acceleration, Acceleration);
+
+            StartReceiveFromServer(this, socket_orientation, Orientation);
 
         }
 
@@ -100,13 +142,14 @@ namespace CommandApplication
             //}
             //else
             //{
-                var line = GetLines(measurement);
+            var line = GetLines(measurement);
             //}
             
 
 
             byte[] recvBuf;
             bool receiving = false;
+            int keepRecords = 40;
             
             Uri uri = new Uri(UrlBase + measurement);
 
@@ -160,18 +203,53 @@ namespace CommandApplication
                         var pitch = res[0]; //TODO: Need to confirm order
                         var roll = res[1];
                         var yaw = res[2];
-                        line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
-                        line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
-                        line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+
+                        
+
+                        //line_yaw.Values.Remove(first_yaw);
+
+                        if (line_roll.Values.Count < keepRecords)
+                        {
+                            line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
+                            line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
+                            line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+                        }
+                        if (line_roll.Values.Count > keepRecords - 1)
+                        {
+                            var first_roll = line_roll.Values[0]; //TODO: Thread-safe?
+                            var first_pitch = line_pitch.Values[0];
+                            var first_yaw = line_yaw.Values[0];
+                            //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
+
+                            line_roll.Values.Remove(first_roll);
+                            line_pitch.Values.Remove(first_pitch);
+                            line_yaw.Values.Remove(first_yaw);
+                        }
                     }
                     else //Acceleration
                     {
                         var x = res[0];
                         var y = res[1];
                         var z = res[2];
-                        lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
-                        lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
-                        lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+
+                        
+                        if(lineX.Values.Count < keepRecords)
+                        {
+                            lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
+                            lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
+                            lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+                        }
+                        if(lineX.Values.Count > keepRecords - 1)
+                        {
+                            var first_X = lineX.Values[0]; //TODO: Thread-safe?
+                            var first_Y = lineY.Values[0];
+                            var first_Z = lineZ.Values[0];
+
+                            lineX.Values.Remove(first_X);
+                            lineY.Values.Remove(first_Y);
+                            lineZ.Values.Remove(first_Z);
+                        }
+                        
 
                     }
                 }
