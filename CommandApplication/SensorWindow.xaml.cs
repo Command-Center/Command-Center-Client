@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Net.WebSockets;
+using LiveCharts;
+using LiveCharts.Wpf;
+using CommandApplication.Model;
+using System.Globalization;
 
 namespace CommandApplication
 {
@@ -18,12 +22,24 @@ namespace CommandApplication
         private const string UrlTemp = "ws://129.242.174.142:8080/temp";
         private readonly ClientWebSocket socket;
 
+        public SeriesCollection SeriesCollection { get; set; }
+        LineSeries line;
+
         public SensorWindow()
         {
             InitializeComponent();
             socket = new ClientWebSocket();
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
+
+            line = new LineSeries
+            {
+                Title = "Temperature",
+                Values = new ChartValues<double> { 0 }
+            };
+                
+            
+            myChart.Series.Add(line);
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
@@ -53,7 +69,7 @@ namespace CommandApplication
                 window.serverStatus.Visibility = Visibility.Visible;
                 
             }   
-            var recvBuf = new byte[16];
+            var recvBuf = new byte[32];
             var recvSeg = new ArraySegment<byte>(recvBuf);
 
             var sendBuf = new byte[16];
@@ -72,12 +88,15 @@ namespace CommandApplication
                 resultArray = RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
                 count++;
-                if(count > 100)
+                if(count > 10) //TODO: Kan fjernes
                 {
                     receiving = false;
                 }
                 //System.Diagnostics.Trace.WriteLine("Resultatet er: " + stringResult.ToString() + "\n");
                 window.listTemp.Items.Add(stringResult.ToString());
+                window.line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                
+                //System.Diagnostics.Trace.WriteLine(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
             }
         }
         private static async Task DisconnectFromServer(SensorWindow window, ClientWebSocket socket)
@@ -86,10 +105,11 @@ namespace CommandApplication
             sendBuf = GetBytes(Stop);
             var sendSeg = new ArraySegment<byte>(sendBuf);
             await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
+
         }
         static byte[] GetBytes(string str)
         {
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+            ASCIIEncoding encoding = new ASCIIEncoding();
             Byte[] bytes = encoding.GetBytes(str);
             return bytes;
         }
