@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -25,9 +26,18 @@ namespace CommandApplication
         public MapWindow()
         {
             InitializeComponent();
-            GetAISData();
+            //RunJavaProcessForAISData();
+            
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                GetAISData();
+            }).Start();
             Browser.Address = new Uri(String.Format("file:///{0}/Views/openlayermap.html", curDir)).ToString();
         }
+
+        
+
         public void GetAISData()
         {
             Trace.WriteLine("AIS!");
@@ -48,7 +58,7 @@ namespace CommandApplication
                 if(message.Contains("Received AIS message:"))
                 {
                     AIS ais = new AIS(message.Trim().Substring(22));
-                    Trace.WriteLine(ais.res);
+                    //Trace.WriteLine(ais.res);
                 }
                 
             }

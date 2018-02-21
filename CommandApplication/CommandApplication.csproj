@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AIS.cs" />
+    <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\PositionReport.cs" />
     <Compile Include="Model\ShipAndVoyageData.cs" />
     <Compile Include="MapWindow.xaml.cs">

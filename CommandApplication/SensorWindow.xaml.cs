@@ -19,32 +19,39 @@ namespace CommandApplication
     {
         private const string Start = "START";
         private const string Stop = "STOP";
-        private const string UrlBase = "ws://129.242.174.142:8080/";
+        //private const string UrlBase = "ws://129.242.174.142:8080/";
+        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8080/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;
         private readonly ClientWebSocket socket_orientation;
         private readonly ClientWebSocket socket_acceleration;
+        private readonly ClientWebSocket socket_gps;
 
         private const string Temp = "temp";
         private const string Pressure = "pressure";
         private const string Humidity = "humidity";
         private const string Orientation = "orientation";
         private const string Acceleration = "acceleration";
+        private const string Gps = "gps";
+
 
         public SeriesCollection SeriesCollection { get; set; }
 
         static LineSeries line_temp;
         static LineSeries line_pressure;
         static LineSeries line_humidity;
-        static LineSeries line_orientation;
-        static LineSeries line_acceleration;
+
         static LineSeries lineX;
         static LineSeries lineY;
         static LineSeries lineZ;
+
         static LineSeries line_roll;
         static LineSeries line_pitch;
         static LineSeries line_yaw;
+
+        static LineSeries line_orientation;
+        static LineSeries line_acceleration;
 
         public SensorWindow()
         {
@@ -54,6 +61,7 @@ namespace CommandApplication
             socket_humidity = new ClientWebSocket();
             socket_acceleration = new ClientWebSocket();
             socket_orientation = new ClientWebSocket();
+            socket_gps = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
@@ -110,9 +118,9 @@ namespace CommandApplication
             //tempChart.Series.Add(line_temp);
             //presChart.Series.Add(line_pressure);
             //humChart.Series.Add(line_humidity);
-            //accXChart.Series.Add(lineX);
-            //accYChart.Series.Add(lineY);
-            //accZChart.Series.Add(lineZ);
+            accXChart.Series.Add(lineX);
+            accYChart.Series.Add(lineY);
+            accZChart.Series.Add(lineZ);
 
             rollChart.Series.Add(line_roll);
             pitchChart.Series.Add(line_pitch);
@@ -120,13 +128,15 @@ namespace CommandApplication
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            //StartReceiveFromServer(this, socket_pressure, Pressure);
-            //StartReceiveFromServer(this, socket_temp, Temp);
-            //StartReceiveFromServer(this, socket_humidity, Humidity);
+            StartReceiveFromServer(this, socket_pressure, Pressure);
+            StartReceiveFromServer(this, socket_temp, Temp);
+            StartReceiveFromServer(this, socket_humidity, Humidity);
 
-            //StartReceiveFromServer(this, socket_acceleration, Acceleration);
+            StartReceiveFromServer(this, socket_acceleration, Acceleration);
 
             StartReceiveFromServer(this, socket_orientation, Orientation);
+
+            StartReceiveFromServer(this, socket_orientation, Gps);
 
         }
 
@@ -143,6 +153,7 @@ namespace CommandApplication
             //else
             //{
             var line = GetLines(measurement);
+            
             //}
             
 
@@ -201,10 +212,13 @@ namespace CommandApplication
                     if(measurement == Orientation)
                     {
                         var pitch = res[0]; //TODO: Need to confirm order
-                        var roll = res[1];
+                        var roll = res[1]; //Tror det er feil rekkefølge
                         var yaw = res[2];
 
-                        
+
+                        window.rollLabel.Content = roll;
+                        window.pitchLabel.Content = pitch;
+                        window.yawLabel.Content = yaw;
 
                         //line_yaw.Values.Remove(first_yaw);
 
@@ -232,8 +246,11 @@ namespace CommandApplication
                         var y = res[1];
                         var z = res[2];
 
-                        
-                        if(lineX.Values.Count < keepRecords)
+                        window.accxLabel.Content = x;
+                        window.accyLabel.Content = y;
+                        window.acczLabel.Content = z;
+
+                        if (lineX.Values.Count < keepRecords)
                         {
                             lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
                             lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
@@ -253,9 +270,27 @@ namespace CommandApplication
 
                     }
                 }
+                else if(measurement == Gps)
+                {
+                    //JSON
+                }
                 else
                 {
                     line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                    switch(measurement)
+                    {
+                        case Temp:
+                            window.tempLabel.Content = stringResult;
+                            break;
+                        case Pressure:
+                            window.presLabel.Content = stringResult;
+                            break;
+                        case Humidity:
+                            window.humLabel.Content = stringResult;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 
 
@@ -276,9 +311,9 @@ namespace CommandApplication
                 case Humidity:
                     return line_humidity;
                 case Orientation:
-                    return line_orientation;
+                    return null;
                 case Acceleration:
-                    return line_acceleration;
+                    return null;
                 default:
                     return null;
             }
@@ -319,6 +354,7 @@ namespace CommandApplication
             var output = input.Take(res + 1).ToArray();
             return output;
         }
+
 
         private void Button_Disconnect(object sender, RoutedEventArgs e)
         {

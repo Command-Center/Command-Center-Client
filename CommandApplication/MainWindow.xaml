@@ -14,6 +14,19 @@
         <Button Content="Sensor Data" HorizontalAlignment="Left" Margin="83,82,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click" RenderTransformOrigin="1.403,0.946"/>
         <Button Content="Map" HorizontalAlignment="Left" Margin="83,131,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click_1" RenderTransformOrigin="1.089,-0.219"/>
         <Image x:Name="mapImage" HorizontalAlignment="Left" Height="297" Margin="83,182,0,0" VerticalAlignment="Top" Width="637"/>
+        <StackPanel>
+            <ContentControl Margin="50 50 50 50" Height="480" Width="640" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <wpf:ChromiumWebBrowser x:Name="BrowserCam1">
+
+                </wpf:ChromiumWebBrowser>
+            </ContentControl>
+            <ContentControl Margin="50 50 50 50" Height="480" Width="640" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <wpf:ChromiumWebBrowser x:Name="BrowserCam2">
+
+                </wpf:ChromiumWebBrowser>
+            </ContentControl>
+        </StackPanel>
+        
         <!--<WebBrowser x:Name="mapNavi" HorizontalAlignment="Left" Height="183" Margin="399,182,0,0" VerticalAlignment="Top" Width="321"/>-->
         
     </Grid>

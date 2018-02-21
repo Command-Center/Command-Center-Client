@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using CommandApplication.Model;
 
 namespace CommandApplication
 {
@@ -35,11 +36,15 @@ namespace CommandApplication
             //map.Center = new Location("1600 Pennsylvania Ave NW, Washington, DC 20500");
             //map.Size = new System.Drawing.Size(400, 400);
             //map.Zoom = 14;
-            
+
             //map.Scale = 2;
             //mapImage.Source = new BitmapImage(map.ToUri());
+            //media.Source = new Uri("http://129.242.174.142:8081/");
+            //BrowserCam.Address = new Uri("http://129.242.174.142:8081/").ToString();
+            BrowserCam1.Address = new Uri("http://" + Constants.ServerAddress + ":8084").ToString();
+            BrowserCam2.Address = new Uri("http://" + Constants.ServerAddress + ":8083").ToString();
 
-            
+
 
         }
 
