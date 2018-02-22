@@ -160,7 +160,7 @@ namespace CommandApplication
 
             //byte[] recvBuf;
             bool receiving = false;
-            int keepRecords = 50;
+            int keepRecords = 100;
             
             Uri uri = new Uri(UrlBase + measurement);
 
@@ -219,7 +219,7 @@ namespace CommandApplication
                             var roll = res[1];
                             var yaw = res[2];
                             
-                            System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
+                            //System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
 
                             window.rollLabel.Content = roll;
                             window.pitchLabel.Content = pitch;
