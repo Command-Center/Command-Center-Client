@@ -136,7 +136,7 @@ namespace CommandApplication
 
             StartReceiveFromServer(this, socket_orientation, Orientation);
 
-            StartReceiveFromServer(this, socket_orientation, Gps);
+            //StartReceiveFromServer(this, socket_orientation, Gps);
 
         }
 
@@ -158,9 +158,9 @@ namespace CommandApplication
             
 
 
-            byte[] recvBuf;
+            //byte[] recvBuf;
             bool receiving = false;
-            int keepRecords = 40;
+            int keepRecords = 50;
             
             Uri uri = new Uri(UrlBase + measurement);
 
@@ -179,16 +179,16 @@ namespace CommandApplication
                 
             }
             
-            if(measurement == Acceleration || measurement == Orientation)
-            {
-                recvBuf = new byte[128];
-            }
-            else
-            {
-                recvBuf = new byte[32];
-            }
+            //if(measurement == Acceleration || measurement == Orientation)
+            //{
+            //    recvBuf = new byte[32];
+            //}
+            //else
+            //{
+            //    recvBuf = new byte[32];
+            //}
             
-            var recvSeg = new ArraySegment<byte>(recvBuf);
+            //var recvSeg = new ArraySegment<byte>(recvBuf);
 
             var sendBuf = new byte[16];
             
@@ -202,43 +202,60 @@ namespace CommandApplication
             while (receiving)
             {
                 string stringResult = "";
+                var recvBuf = new byte[32];
+                var recvSeg = new ArraySegment<byte>(recvBuf);
                 var result = await socket.ReceiveAsync(recvSeg, System.Threading.CancellationToken.None);
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
                 resultArray = RemoveTrailingZeros(resultArray);
                 stringResult += Encoding.UTF8.GetString(resultArray);
                 if (measurement == Orientation || measurement == Acceleration)
                 {
+                    System.Diagnostics.Trace.WriteLine(stringResult);
                     var res = SplitXYZ(stringResult);
                     if(measurement == Orientation)
                     {
-                        var pitch = res[0]; //TODO: Need to confirm order
-                        var roll = res[1]; //Tror det er feil rekkefølge
-                        var yaw = res[2];
+                        
+                            var pitch = res[0];
+                            var roll = res[1];
+                            var yaw = res[2];
+                            
+                            System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
 
-
-                        window.rollLabel.Content = roll;
-                        window.pitchLabel.Content = pitch;
-                        window.yawLabel.Content = yaw;
+                            window.rollLabel.Content = roll;
+                            window.pitchLabel.Content = pitch;
+                            window.yawLabel.Content = yaw;
 
                         //line_yaw.Values.Remove(first_yaw);
 
                         if (line_roll.Values.Count < keepRecords)
                         {
-                            line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
-                            line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
-                            line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+                            try
+                            {
+                                line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
+                                line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
+                                line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+                            }
+                            catch (Exception e)
+                            {
+                                System.Diagnostics.Trace.WriteLine("Feilen: " + e);
+                                System.Diagnostics.Trace.WriteLine("Tallet er: " + roll);
+                                System.Diagnostics.Trace.WriteLine("Tallet er: " + pitch);
+                                System.Diagnostics.Trace.WriteLine("Tallet er: " + yaw);
+                            }
                         }
                         if (line_roll.Values.Count > keepRecords - 1)
-                        {
-                            var first_roll = line_roll.Values[0]; //TODO: Thread-safe?
-                            var first_pitch = line_pitch.Values[0];
-                            var first_yaw = line_yaw.Values[0];
-                            //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
+                            {
+                                var first_roll = line_roll.Values[0]; //TODO: Thread-safe?
+                                var first_pitch = line_pitch.Values[0];
+                                var first_yaw = line_yaw.Values[0];
+                                //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
 
-                            line_roll.Values.Remove(first_roll);
-                            line_pitch.Values.Remove(first_pitch);
-                            line_yaw.Values.Remove(first_yaw);
-                        }
+                                line_roll.Values.Remove(first_roll);
+                                line_pitch.Values.Remove(first_pitch);
+                                line_yaw.Values.Remove(first_yaw);
+                            }
+                        
+                        
                     }
                     else //Acceleration
                     {
