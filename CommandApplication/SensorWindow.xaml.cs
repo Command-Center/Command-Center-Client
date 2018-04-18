@@ -35,6 +35,11 @@ namespace CommandApplication
         private const string Acceleration = "acceleration";
         private const string Gps = "gps";
 
+        private int RollForCalibrating = 0;
+        private int PitchForCalibrating = 0;
+        private int YawForCalibrating = 0;
+
+        private static bool connected = false;
 
         public SeriesCollection SeriesCollection { get; set; }
 
@@ -170,6 +175,7 @@ namespace CommandApplication
                 window.serverStatus.Visibility = Visibility.Visible;
                 window.serverStatus.Foreground = new SolidColorBrush(Colors.Green);
                 window.serverStatus.Content = "Connected to server";
+                connected = true;
                 receiving = true;
             } catch (Exception e)
             {
@@ -215,15 +221,23 @@ namespace CommandApplication
                     if(measurement == Orientation)
                     {
                         
-                            var pitch = res[0];
-                            var roll = res[1];
-                            var yaw = res[2];
-                            
-                            //System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
+                        var pitch = Convert.ToDouble(res[0], CultureInfo.InvariantCulture);
+                        var roll = Convert.ToDouble(res[1], CultureInfo.InvariantCulture);
+                        var yaw = Convert.ToDouble(res[2], CultureInfo.InvariantCulture);
 
-                            window.rollLabel.Content = roll;
-                            window.pitchLabel.Content = pitch;
-                            window.yawLabel.Content = yaw;
+                        //System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
+
+                        //Account for calibration
+                        pitch = pitch - window.PitchForCalibrating;
+                        if(pitch > 180) { pitch = pitch - 360; }
+                        roll = roll - window.RollForCalibrating;
+                        if(roll > 180) { roll = roll - 360; }
+                        yaw = yaw - window.YawForCalibrating;
+                        if(yaw > 180) { yaw = yaw - 360; }
+
+                        window.rollLabel.Content = roll;
+                        window.pitchLabel.Content = pitch;
+                        window.yawLabel.Content = yaw;
 
                         //line_yaw.Values.Remove(first_yaw);
 
@@ -231,9 +245,9 @@ namespace CommandApplication
                         {
                             try
                             {
-                                line_roll.Values.Add(Convert.ToDouble(roll, CultureInfo.InvariantCulture));
-                                line_pitch.Values.Add(Convert.ToDouble(pitch, CultureInfo.InvariantCulture));
-                                line_yaw.Values.Add(Convert.ToDouble(yaw, CultureInfo.InvariantCulture));
+                                line_roll.Values.Add(roll);
+                                line_pitch.Values.Add(pitch);
+                                line_yaw.Values.Add(yaw);
                             }
                             catch (Exception e)
                             {
@@ -343,6 +357,7 @@ namespace CommandApplication
             sendBuf = GetBytes(Stop);
             var sendSeg = new ArraySegment<byte>(sendBuf);
             await socket.SendAsync(sendSeg, WebSocketMessageType.Text, true, System.Threading.CancellationToken.None);
+            connected = false; //Need to wait for await?
 
         }
         static byte[] GetBytes(string str)
@@ -376,6 +391,27 @@ namespace CommandApplication
         private void Button_Disconnect(object sender, RoutedEventArgs e)
         {
             DisconnectFromServer(this, socket_temp, Temp);
+        }
+        //Keep sensor still while calibrating for zero values.
+        private void Button_Calibrate(object sender, RoutedEventArgs e)
+        {
+            if (connected)
+            {
+                //Leser siste verdi fra label i SensorWindow.xaml
+                //Midlertidig. Snitt over tid?
+                //OBS; Not Thread-safe
+                var roll_temp = Convert.ToInt32(rollLabel.Content);
+                var yaw_temp = Convert.ToInt32(yawLabel.Content);
+                var pitch_temp = Convert.ToInt32(pitchLabel.Content);
+                RollForCalibrating = roll_temp;
+                PitchForCalibrating = pitch_temp;
+                YawForCalibrating = yaw_temp;
+                yawCalLabel.Content = yaw_temp;
+                rollCalLabel.Content = roll_temp;
+                pitchCalLabel.Content = pitch_temp;
+
+
+            }
         }
     }
 }
