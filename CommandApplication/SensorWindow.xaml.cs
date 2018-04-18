@@ -9,6 +9,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using CommandApplication.Model;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace CommandApplication
 {
@@ -159,7 +160,7 @@ namespace CommandApplication
 
             StartReceiveFromServer(this, socket_orientation, Orientation);
 
-            //StartReceiveFromServer(this, socket_orientation, Gps);
+            StartReceiveFromServer(this, socket_gps, Gps);
 
         }
 
@@ -167,7 +168,7 @@ namespace CommandApplication
         {
 
 
-
+            System.Diagnostics.Trace.WriteLine(measurement);
             //if(measurement == Orientation)
             //{
             //    var lineX = lineX;
@@ -349,6 +350,8 @@ namespace CommandApplication
                 else if(measurement == Gps)
                 {
                     //JSON
+                    System.Diagnostics.Trace.WriteLine(stringResult);
+                    JsonConvert.DeserializeObject(stringResult);
                 }
                 else
                 {
