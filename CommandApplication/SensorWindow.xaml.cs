@@ -74,49 +74,67 @@ namespace CommandApplication
             line_temp = new LineSeries
             {
                 Title = "Temperature",
-                Values = new ChartValues<double> {  }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             line_pressure = new LineSeries
             {
                 Title = "Pressure",
-                Values = new ChartValues<double> {  }
+                Values = new ChartValues<double> {  },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             line_humidity = new LineSeries
             {
                 Title = "Humidity",
-                Values = new ChartValues<double> {  }
+                Values = new ChartValues<double> {  },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
 
             lineX = new LineSeries
             {
                 Title = "AccX",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             lineY = new LineSeries
             {
                 Title = "AccY",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             lineZ = new LineSeries
             {
                 Title = "AccZ",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
 
             line_roll = new LineSeries
             {
                 Title = "Roll",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             line_pitch = new LineSeries
             {
                 Title = "Pitch",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
             line_yaw = new LineSeries
             {
                 Title = "Yaw",
-                Values = new ChartValues<double> { }
+                Values = new ChartValues<double> { },
+                PointGeometry = null,
+                Fill = Brushes.Transparent
             };
 
 
@@ -147,6 +165,9 @@ namespace CommandApplication
 
         private static async Task StartReceiveFromServer(SensorWindow window, ClientWebSocket socket, string measurement)
         {
+
+
+
             //if(measurement == Orientation)
             //{
             //    var lineX = lineX;
@@ -166,6 +187,7 @@ namespace CommandApplication
             //byte[] recvBuf;
             bool receiving = false;
             int keepRecords = 100;
+            bool firstRecord = true;
             
             Uri uri = new Uri(UrlBase + measurement);
 
@@ -216,11 +238,13 @@ namespace CommandApplication
                 stringResult += Encoding.UTF8.GetString(resultArray);
                 if (measurement == Orientation || measurement == Acceleration)
                 {
-                    System.Diagnostics.Trace.WriteLine(stringResult);
+                    //System.Diagnostics.Trace.WriteLine(stringResult);
                     var res = SplitXYZ(stringResult);
                     if(measurement == Orientation)
                     {
                         
+                        
+
                         var pitch = Convert.ToDouble(res[0], CultureInfo.InvariantCulture);
                         var roll = Convert.ToDouble(res[1], CultureInfo.InvariantCulture);
                         var yaw = Convert.ToDouble(res[2], CultureInfo.InvariantCulture);
@@ -238,6 +262,27 @@ namespace CommandApplication
                         window.rollLabel.Content = roll;
                         window.pitchLabel.Content = pitch;
                         window.yawLabel.Content = yaw;
+
+
+                        //Automatic calibration on startup
+                        if(firstRecord)
+                        {
+                            window.CalibrateOrientations();
+
+                            //Account for calibration
+                            pitch = pitch - window.PitchForCalibrating;
+                            if (pitch > 180) { pitch = pitch - 360; }
+                            roll = roll - window.RollForCalibrating;
+                            if (roll > 180) { roll = roll - 360; }
+                            yaw = yaw - window.YawForCalibrating;
+                            if (yaw > 180) { yaw = yaw - 360; }
+
+                            window.rollLabel.Content = roll;
+                            window.pitchLabel.Content = pitch;
+                            window.yawLabel.Content = yaw;
+
+                            firstRecord = false;
+                        }
 
                         //line_yaw.Values.Remove(first_yaw);
 
@@ -395,6 +440,10 @@ namespace CommandApplication
         //Keep sensor still while calibrating for zero values.
         private void Button_Calibrate(object sender, RoutedEventArgs e)
         {
+            CalibrateOrientations();
+        }
+        private void CalibrateOrientations()
+        {
             if (connected)
             {
                 //Leser siste verdi fra label i SensorWindow.xaml
@@ -406,11 +455,11 @@ namespace CommandApplication
                 RollForCalibrating = roll_temp;
                 PitchForCalibrating = pitch_temp;
                 YawForCalibrating = yaw_temp;
-                yawCalLabel.Content = yaw_temp;
-                rollCalLabel.Content = roll_temp;
-                pitchCalLabel.Content = pitch_temp;
 
 
+                //yawCalLabel.Content = yaw_temp;
+                //rollCalLabel.Content = roll_temp;
+                //pitchCalLabel.Content = pitch_temp;
             }
         }
     }

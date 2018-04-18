@@ -114,7 +114,11 @@
 
             <lvc:CartesianChart x:Name="accXChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccX" MinValue="-5" MaxValue="5"></lvc:Axis>
+                    <lvc:Axis Title="AccX" MinValue="-1" MaxValue="1">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
@@ -123,7 +127,11 @@
             
             <lvc:CartesianChart x:Name="accYChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccY" MinValue="-5" MaxValue="5"/>
+                    <lvc:Axis Title="AccY" MinValue="-1" MaxValue="1">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"/>
@@ -132,16 +140,24 @@
 
             <lvc:CartesianChart x:Name="accZChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccZ" MinValue="-5" MaxValue="5"></lvc:Axis>
+                    <lvc:Axis Title="AccZ" MinValue="-1" MaxValue="2">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-            
+
             <lvc:CartesianChart x:Name="rollChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Roll" MinValue="-90" MaxValue="90"></lvc:Axis>
+                    <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
@@ -150,7 +166,11 @@
             
             <lvc:CartesianChart x:Name="pitchChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Pitch" MinValue="-90" MaxValue="90"></lvc:Axis>
+                    <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time"></lvc:Axis>
@@ -159,7 +179,11 @@
             
             <lvc:CartesianChart x:Name="yawChart">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90"></lvc:Axis>
+                    <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="False" Step="20"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" ></lvc:Axis>
