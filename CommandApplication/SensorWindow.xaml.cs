@@ -152,15 +152,15 @@ namespace CommandApplication
 
             //BrowserMT.Address = new Uri(String.Format("file:///{0}/Views/marinetrafficmap.html", curDir)).ToString();
 
-            //StartReceiveFromServer(this, socket_pressure, Pressure);
-            //StartReceiveFromServer(this, socket_temp, Temp);
-            //StartReceiveFromServer(this, socket_humidity, Humidity);
+            StartReceiveFromServer(this, socket_pressure, Pressure);
+            StartReceiveFromServer(this, socket_temp, Temp);
+            StartReceiveFromServer(this, socket_humidity, Humidity);
 
-            //StartReceiveFromServer(this, socket_acceleration, Acceleration);
+            StartReceiveFromServer(this, socket_acceleration, Acceleration);
 
             StartReceiveFromServer(this, socket_orientation, Orientation);
 
-            //StartReceiveFromServer(this, socket_gps, Gps);
+            StartReceiveFromServer(this, socket_gps, Gps);
 
         }
 
@@ -292,8 +292,8 @@ namespace CommandApplication
                             try
                             {
                                 line_roll.Values.Add(roll);
-                                //line_pitch.Values.Add(pitch);
-                                //line_yaw.Values.Add(yaw);
+                                line_pitch.Values.Add(pitch);
+                                line_yaw.Values.Add(yaw);
                             }
                             catch (Exception e)
                             {
@@ -304,16 +304,16 @@ namespace CommandApplication
                             }
                         }
                         if (line_roll.Values.Count > keepRecords - 1)
-                            {
-                                var first_roll = line_roll.Values[0]; //TODO: Thread-safe?
-                                //var first_pitch = line_pitch.Values[0];
-                                //var first_yaw = line_yaw.Values[0];
-                                //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
+                        {
+                            var first_roll = line_roll.Values[0]; //TODO: Thread-safe?
+                            var first_pitch = line_pitch.Values[0];
+                            var first_yaw = line_yaw.Values[0];
+                            //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
 
-                                line_roll.Values.Remove(first_roll);
-                                //line_pitch.Values.Remove(first_pitch);
-                                //line_yaw.Values.Remove(first_yaw);
-                            }
+                            line_roll.Values.Remove(first_roll);
+                            line_pitch.Values.Remove(first_pitch);
+                            line_yaw.Values.Remove(first_yaw);
+                        }
                         
                         
                     }
