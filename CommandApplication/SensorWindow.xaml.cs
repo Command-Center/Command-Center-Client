@@ -231,7 +231,7 @@ namespace CommandApplication
             while (receiving)
             {
                 string stringResult = "";
-                var recvBuf = new byte[32];
+                var recvBuf = new byte[64]; //TODO: Should change based on response. GPS needs bigger than rest.
                 var recvSeg = new ArraySegment<byte>(recvBuf);
                 var result = await socket.ReceiveAsync(recvSeg, System.Threading.CancellationToken.None);
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
@@ -351,7 +351,19 @@ namespace CommandApplication
                 {
                     //JSON
                     System.Diagnostics.Trace.WriteLine(stringResult);
-                    JsonConvert.DeserializeObject(stringResult);
+                    try
+                    {
+                        GPS GPS = JsonConvert.DeserializeObject<GPS>(stringResult);
+                        window.latLabel.Content = GPS.latitude;
+                        window.longLabel.Content = GPS.longitude;
+                        window.speedLabel.Content = GPS.hspeed;
+                        window.altLabel.Content = GPS.alt;
+                    }
+                    catch(Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine(ex);
+                    }
+                    
                 }
                 else
                 {

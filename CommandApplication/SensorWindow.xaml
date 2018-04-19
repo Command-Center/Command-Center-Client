@@ -61,6 +61,22 @@
                 <Label Content="Yaw: "/>
                 <Label Name="yawLabel"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Longitude: "/>
+                <Label Name="longLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Latitude: "/>
+                <Label Name="latLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Speed: "/>
+                <Label Name="speedLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Altitude: "/>
+                <Label Name="altLabel"/>
+            </StackPanel>
 
             <!--<StackPanel Orientation="Horizontal">
                 <Label Content="Yaw Calibrated: "/>
