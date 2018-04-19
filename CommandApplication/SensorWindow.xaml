@@ -125,6 +125,7 @@
                 <Style TargetType="{x:Type lvc:CartesianChart}">
                     <Setter Property="Margin" Value="10,30,0,0"></Setter>
                     <Setter Property="Height" Value="200"></Setter>
+                    <Setter Property="DisableAnimations" Value="True"></Setter>
                 </Style>
             </StackPanel.Resources>
 
@@ -140,7 +141,7 @@
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-            
+
             <lvc:CartesianChart x:Name="accYChart">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="AccY" MinValue="-1" MaxValue="1">
@@ -179,7 +180,7 @@
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-            
+
             <lvc:CartesianChart x:Name="pitchChart">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
@@ -192,7 +193,7 @@
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-            
+
             <lvc:CartesianChart x:Name="yawChart">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90">
