@@ -28,7 +28,8 @@ namespace CommandApplication
         private readonly ClientWebSocket socket_orientation;
         private readonly ClientWebSocket socket_acceleration;
         private readonly ClientWebSocket socket_gps;
-        private readonly ClientWebSocket socket_ir;
+        private readonly ClientWebSocket socket_ir1;
+        private readonly ClientWebSocket socket_ir2;
 
         private const string Start = "START";
         private const string Stop = "STOP";
@@ -38,7 +39,8 @@ namespace CommandApplication
         private const string Orientation = "orientation";
         private const string Acceleration = "acceleration";
         private const string Gps = "gps";
-        private const string IR = "irtemp";
+        private const string IR1 = "irtemp1";
+        private const string IR2 = "irtemp2";
 
         private int RollForCalibrating = 0;
         private int PitchForCalibrating = 0;
@@ -72,7 +74,8 @@ namespace CommandApplication
             socket_acceleration = new ClientWebSocket();
             socket_orientation = new ClientWebSocket();
             socket_gps = new ClientWebSocket();
-            socket_ir = new ClientWebSocket();
+            socket_ir1 = new ClientWebSocket();
+            socket_ir2 = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
@@ -168,7 +171,8 @@ namespace CommandApplication
 
             StartReceiveFromServer(this, socket_gps, Gps);
 
-            StartReceiveFromServer(this, socket_ir, IR);
+            StartReceiveFromServer(this, socket_ir1, IR1);
+            StartReceiveFromServer(this, socket_ir2, IR2);
 
 
             accXChart.Visibility = Visibility.Visible;
@@ -419,8 +423,11 @@ namespace CommandApplication
                             case Humidity:
                                 window.humLabel.Content = stringResult;
                                 break;
-                            case IR:
+                            case IR1:
                                 window.irLabel.Content = stringResult;
+                                break;
+                            case IR2:
+                                window.ir2Label.Content = stringResult;
                                 break;
                             default:
                                 break;
