@@ -38,7 +38,7 @@ namespace CommandApplication
         private const string Orientation = "orientation";
         private const string Acceleration = "acceleration";
         private const string Gps = "gps";
-        private const string IR = "ir";
+        private const string IR = "irtemp";
 
         private int RollForCalibrating = 0;
         private int PitchForCalibrating = 0;
@@ -72,6 +72,7 @@ namespace CommandApplication
             socket_acceleration = new ClientWebSocket();
             socket_orientation = new ClientWebSocket();
             socket_gps = new ClientWebSocket();
+            socket_ir = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
@@ -404,8 +405,9 @@ namespace CommandApplication
                 
                 else
                 {
+                    System.Diagnostics.Trace.WriteLine(measurement);
                     window.Dispatcher.Invoke(new Action(() => {
-                        line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                        //line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
                         switch (measurement)
                         {
                             case Temp:
