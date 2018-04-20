@@ -10,6 +10,7 @@ using LiveCharts.Wpf;
 using CommandApplication.Model;
 using System.Globalization;
 using Newtonsoft.Json;
+using LiveCharts.Geared;
 
 namespace CommandApplication
 {
@@ -18,8 +19,7 @@ namespace CommandApplication
     /// </summary>
     public partial class SensorWindow : Window
     {
-        private const string Start = "START";
-        private const string Stop = "STOP";
+        
         //private const string UrlBase = "ws://129.242.174.142:8080/";
         private const string UrlBase = "ws://" + Constants.ServerAddress + ":8080/";
         private readonly ClientWebSocket socket_temp;
@@ -28,13 +28,17 @@ namespace CommandApplication
         private readonly ClientWebSocket socket_orientation;
         private readonly ClientWebSocket socket_acceleration;
         private readonly ClientWebSocket socket_gps;
+        private readonly ClientWebSocket socket_ir;
 
+        private const string Start = "START";
+        private const string Stop = "STOP";
         private const string Temp = "temp";
         private const string Pressure = "pressure";
         private const string Humidity = "humidity";
         private const string Orientation = "orientation";
         private const string Acceleration = "acceleration";
         private const string Gps = "gps";
+        private const string IR = "ir";
 
         private int RollForCalibrating = 0;
         private int PitchForCalibrating = 0;
@@ -72,76 +76,77 @@ namespace CommandApplication
             string curDir = System.IO.Directory.GetCurrentDirectory();
             this.serverStatus.Visibility = Visibility.Hidden;
 
-            line_temp = new LineSeries
+            line_temp = new GLineSeries
             {
                 Title = "Temperature",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
+                
             };
-            line_pressure = new LineSeries
+            line_pressure = new GLineSeries
             {
                 Title = "Pressure",
-                Values = new ChartValues<double> {  },
+                Values = new GearedValues<double> {  }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
-            line_humidity = new LineSeries
+            line_humidity = new GLineSeries
             {
                 Title = "Humidity",
-                Values = new ChartValues<double> {  },
+                Values = new GearedValues<double> {  }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
 
-            lineX = new LineSeries
+            lineX = new GLineSeries
             {
                 Title = "AccX",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
-            lineY = new LineSeries
+            lineY = new GLineSeries
             {
                 Title = "AccY",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
-            lineZ = new LineSeries
+            lineZ = new GLineSeries
             {
                 Title = "AccZ",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
 
-            line_roll = new LineSeries
+            line_roll = new GLineSeries
             {
                 Title = "Roll",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
-            line_pitch = new LineSeries
+            line_pitch = new GLineSeries
             {
                 Title = "Pitch",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
-            line_yaw = new LineSeries
+            line_yaw = new GLineSeries
             {
                 Title = "Yaw",
-                Values = new ChartValues<double> { },
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
-            };
+                
+        };
 
 
             //tempChart.Series.Add(line_temp);
-            //presChart.Series.Add(line_pressure);
-            //humChart.Series.Add(line_humidity);
+            
             accXChart.Series.Add(lineX);
             accYChart.Series.Add(lineY);
             accZChart.Series.Add(lineZ);
@@ -161,6 +166,17 @@ namespace CommandApplication
             StartReceiveFromServer(this, socket_orientation, Orientation);
 
             StartReceiveFromServer(this, socket_gps, Gps);
+
+            StartReceiveFromServer(this, socket_ir, IR);
+
+
+            accXChart.Visibility = Visibility.Visible;
+            accYChart.Visibility = Visibility.Visible;
+            accZChart.Visibility = Visibility.Visible;
+
+            rollChart.Visibility = Visibility.Visible;
+            pitchChart.Visibility = Visibility.Visible;
+            yawChart.Visibility = Visibility.Visible;
 
         }
 
@@ -187,7 +203,7 @@ namespace CommandApplication
 
             //byte[] recvBuf;
             bool receiving = false;
-            int keepRecords = 300;
+            int keepRecords = 150;
             bool firstRecord = true;
             
             Uri uri = new Uri(UrlBase + measurement);
@@ -231,7 +247,7 @@ namespace CommandApplication
             while (receiving)
             {
                 string stringResult = "";
-                var recvBuf = new byte[64]; //TODO: Should change based on response. GPS needs bigger than rest.
+                var recvBuf = new byte[128]; //TODO: Should change based on response. GPS needs bigger than rest.
                 var recvSeg = new ArraySegment<byte>(recvBuf);
                 var result = await socket.ReceiveAsync(recvSeg, System.Threading.CancellationToken.None);
                 var resultArray = recvSeg.Take(recvSeg.Count).ToArray();
@@ -260,9 +276,12 @@ namespace CommandApplication
                         yaw = yaw - window.YawForCalibrating;
                         if(yaw > 180) { yaw = yaw - 360; }
 
-                        window.rollLabel.Content = roll;
-                        window.pitchLabel.Content = pitch;
-                        window.yawLabel.Content = yaw;
+                        window.Dispatcher.Invoke(new Action(() => {
+                            window.rollLabel.Content = roll;
+                            window.pitchLabel.Content = pitch;
+                            window.yawLabel.Content = yaw;
+                        }));
+                        
 
 
                         //Automatic calibration on startup
@@ -291,9 +310,12 @@ namespace CommandApplication
                         {
                             try
                             {
-                                line_roll.Values.Add(roll);
-                                line_pitch.Values.Add(pitch);
-                                line_yaw.Values.Add(yaw);
+                                window.Dispatcher.Invoke(new Action(() => {
+                                    line_roll.Values.Add(roll);
+                                    line_pitch.Values.Add(pitch);
+                                    line_yaw.Values.Add(yaw);
+                                }));
+                                
                             }
                             catch (Exception e)
                             {
@@ -310,9 +332,12 @@ namespace CommandApplication
                             var first_yaw = line_yaw.Values[0];
                             //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
 
-                            line_roll.Values.Remove(first_roll);
-                            line_pitch.Values.Remove(first_pitch);
-                            line_yaw.Values.Remove(first_yaw);
+                            window.Dispatcher.Invoke(new Action(() => {
+                                line_roll.Values.Remove(first_roll);
+                                line_pitch.Values.Remove(first_pitch);
+                                line_yaw.Values.Remove(first_yaw);
+                            }));
+                            
                         }
                         
                         
@@ -323,15 +348,22 @@ namespace CommandApplication
                         var y = res[1];
                         var z = res[2];
 
-                        window.accxLabel.Content = x;
-                        window.accyLabel.Content = y;
-                        window.acczLabel.Content = z;
+                        window.Dispatcher.Invoke(new Action(() => {
+                            window.accxLabel.Content = x;
+                            window.accyLabel.Content = y;
+                            window.acczLabel.Content = z;
+                        }));
+
+                        
 
                         if (lineX.Values.Count < keepRecords)
                         {
-                            lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
-                            lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
-                            lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+                            window.Dispatcher.Invoke(new Action(() => {
+                                lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
+                                lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
+                                lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+                            }));
+                            
                         }
                         if(lineX.Values.Count > keepRecords - 1)
                         {
@@ -339,9 +371,13 @@ namespace CommandApplication
                             var first_Y = lineY.Values[0];
                             var first_Z = lineZ.Values[0];
 
-                            lineX.Values.Remove(first_X);
-                            lineY.Values.Remove(first_Y);
-                            lineZ.Values.Remove(first_Z);
+                            
+                            window.Dispatcher.Invoke(new Action(() => {
+                                lineX.Values.Remove(first_X);
+                                lineY.Values.Remove(first_Y);
+                                lineZ.Values.Remove(first_Z);
+                            }));
+
                         }
                         
 
@@ -365,23 +401,30 @@ namespace CommandApplication
                     }
                     
                 }
+                
                 else
                 {
-                    line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
-                    switch(measurement)
-                    {
-                        case Temp:
-                            window.tempLabel.Content = stringResult;
-                            break;
-                        case Pressure:
-                            window.presLabel.Content = stringResult;
-                            break;
-                        case Humidity:
-                            window.humLabel.Content = stringResult;
-                            break;
-                        default:
-                            break;
-                    }
+                    window.Dispatcher.Invoke(new Action(() => {
+                        line.Values.Add(Convert.ToDouble(stringResult, CultureInfo.InvariantCulture));
+                        switch (measurement)
+                        {
+                            case Temp:
+                                window.tempLabel.Content = stringResult;
+                                break;
+                            case Pressure:
+                                window.presLabel.Content = stringResult;
+                                break;
+                            case Humidity:
+                                window.humLabel.Content = stringResult;
+                                break;
+                            case IR:
+                                window.irLabel.Content = stringResult;
+                                break;
+                            default:
+                                break;
+                        }
+                    }));
+                    
                 }
                 
 

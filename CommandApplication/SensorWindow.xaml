@@ -6,7 +6,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:CommandApplication"
-        
+        xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
         mc:Ignorable="d"
         WindowState="Maximized" Height="1557" Width="2034">
     <Grid>
@@ -28,6 +28,10 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Temperature: "/>
                 <Label Name="tempLabel" Content="42 C"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Temperature IR sensor: "/>
+                <Label Name="irLabel"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Humidity: "/>
