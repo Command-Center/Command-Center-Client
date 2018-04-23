@@ -180,10 +180,14 @@ namespace CommandApplication
             accXChart.Visibility = Visibility.Collapsed;
             accYChart.Visibility = Visibility.Collapsed;
             accZChart.Visibility = Visibility.Collapsed;
-
+            
             rollChart.Visibility = Visibility.Visible;
             pitchChart.Visibility = Visibility.Visible;
             yawChart.Visibility = Visibility.Visible;
+
+            accXTitle.Visibility = Visibility.Collapsed;
+            accYTitle.Visibility = Visibility.Collapsed;
+            accZTitle.Visibility = Visibility.Collapsed;
 
         }
 
@@ -536,10 +540,12 @@ namespace CommandApplication
             if (accxCheck.IsChecked)
             {
                 accXChart.Visibility = Visibility.Visible;
+                accXTitle.Visibility = Visibility.Visible;
             }
             else
             {
                 accXChart.Visibility = Visibility.Collapsed;
+                accXTitle.Visibility = Visibility.Collapsed;
             }
         }
         private void Button_Check_Accy(object sender, RoutedEventArgs e)
@@ -547,10 +553,12 @@ namespace CommandApplication
             if (accyCheck.IsChecked)
             {
                 accYChart.Visibility = Visibility.Visible;
+                accYTitle.Visibility = Visibility.Visible;
             }
             else
             {
                 accYChart.Visibility = Visibility.Collapsed;
+                accYTitle.Visibility = Visibility.Collapsed;
             }
         }
         private void Button_Check_Accz(object sender, RoutedEventArgs e)
@@ -558,10 +566,12 @@ namespace CommandApplication
             if (acczCheck.IsChecked)
             {
                 accZChart.Visibility = Visibility.Visible;
+                accZTitle.Visibility = Visibility.Visible;
             }
             else
             {
                 accZChart.Visibility = Visibility.Collapsed;
+                accZTitle.Visibility = Visibility.Collapsed;
             }
         }
         private void Button_Check_Yaw(object sender, RoutedEventArgs e)
