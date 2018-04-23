@@ -41,9 +41,9 @@ namespace CommandApplication
             //mapImage.Source = new BitmapImage(map.ToUri());
             //media.Source = new Uri("http://129.242.174.142:8081/");
             //BrowserCam.Address = new Uri("http://129.242.174.142:8081/").ToString();
-            BrowserCam1.Address = new Uri("http://" + Constants.ServerAddress + ":8084").ToString();
-            BrowserCam2.Address = new Uri("http://" + Constants.ServerAddress + ":8083").ToString();
-
+            BrowserCam1.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8084").ToString();
+            BrowserCam2.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8083").ToString();
+            
 
 
         }
