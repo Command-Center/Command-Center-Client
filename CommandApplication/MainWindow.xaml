@@ -55,7 +55,52 @@
         </StackPanel>-->
 
         <!--<WebBrowser x:Name="mapNavi" HorizontalAlignment="Left" Height="183" Margin="399,182,0,0" VerticalAlignment="Top" Width="321"/>-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button" Background="#FFA3E078">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Rotations"/>
+                        <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                    </StackPanel>
+                </Button.Content>
+                <Button.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="Pitch" Click="GotoPitch"/>
+                        <MenuItem Header="Roll" Click="GotoRoll"/>
+                        <MenuItem Header="Yaw" Click="GotoYaw"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
 
-    
+            <Button Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button2" Background="#FFA3E078">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Accelerations"/>
+                        <Path x:Name="BtnArrow2" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                    </StackPanel>
+                </Button.Content>
+                <Button.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="X direction" Click="GotoXacc"/>
+                        <MenuItem Header="Y direction" Click="GotoYacc"/>
+                        <MenuItem Header="Z direction" Click="GotoZacc"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+        </Grid>
+        
     </Grid>
+    
 </Window>

@@ -131,6 +131,9 @@
     <Compile Include="SensorWindow.xaml.cs">
       <DependentUpon>SensorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SingleGraph.xaml.cs">
+      <DependentUpon>SingleGraph.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -148,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SensorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SingleGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

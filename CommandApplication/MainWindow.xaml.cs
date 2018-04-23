@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using CommandApplication.Model;
 
+
 namespace CommandApplication
 {
     /// <summary>
@@ -104,5 +105,50 @@ namespace CommandApplication
                 //sensorWindow.WindowState = WindowState.Maximized;
             }
         }
+        private void Show_Menu_Button(object sender, RoutedEventArgs e)
+        {
+            (sender as System.Windows.Controls.Button).ContextMenu.IsEnabled = true;
+            (sender as System.Windows.Controls.Button).ContextMenu.PlacementTarget = (sender as System.Windows.Controls.Button);
+            (sender as System.Windows.Controls.Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            (sender as System.Windows.Controls.Button).ContextMenu.IsOpen = true;
+        }
+        private void Show_Menu_Button2(object sender, RoutedEventArgs e)
+        {
+            (sender as System.Windows.Controls.Button).ContextMenu.IsEnabled = true;
+            (sender as System.Windows.Controls.Button).ContextMenu.PlacementTarget = (sender as System.Windows.Controls.Button);
+            (sender as System.Windows.Controls.Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            (sender as System.Windows.Controls.Button).ContextMenu.IsOpen = true;
+        }
+        private void GotoXacc(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("xacc");
+            graphWindow.Show();
+        }
+        private void GotoYacc(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("yacc");
+            graphWindow.Show();
+        }
+        private void GotoZacc(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("zacc");
+            graphWindow.Show();
+        }
+        private void GotoRoll(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("roll");
+            graphWindow.Show();
+        }
+        private void GotoPitch(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("pitch");
+            graphWindow.Show();
+        }
+        private void GotoYaw(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("yaw");
+            graphWindow.Show();
+        }
+
     }
 }
