@@ -149,6 +149,11 @@ namespace CommandApplication
             SingleGraph graphWindow = new SingleGraph("yaw");
             graphWindow.Show();
         }
+        private void Show_Cam(object sender, RoutedEventArgs e)
+        {
+            SingleGraph graphWindow = new SingleGraph("cam");
+            graphWindow.Show();
+        }
 
     }
 }

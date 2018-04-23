@@ -99,6 +99,13 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
+            <Button Height="50" Width="50" Grid.Row="1" Grid.Column="1" Click="Show_Cam">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="Views/cam2.jpg"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </Grid>
         
     </Grid>

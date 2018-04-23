@@ -195,9 +195,12 @@
     <Content Include="aisdecode.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Views\Webcam-icon.png" />
+    <Resource Include="Views\webcam.png" />
     <Resource Include="Views\ship.png" />
     <Resource Include="Unclebob-Spanish-Travel-Ship.ico" />
     <Resource Include="Views\Logo_norsk_pos.png" />
+    <Resource Include="Views\cam2.jpg" />
     <Content Include="Views\marinetrafficmap.html" />
     <Content Include="Views\openlayermap.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
