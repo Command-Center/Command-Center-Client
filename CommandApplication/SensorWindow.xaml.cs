@@ -222,17 +222,19 @@ namespace CommandApplication
             try
             {
                 await socket.ConnectAsync(uri, System.Threading.CancellationToken.None);
-                window.serverStatus.Visibility = Visibility.Visible;
-                window.serverStatus.Foreground = new SolidColorBrush(Colors.Green);
-                window.serverStatus.Content = "Connected to server";
+                //window.serverStatus.Visibility = Visibility.Visible;
+                //window.serverStatus.Foreground = new SolidColorBrush(Colors.Green);
+                //window.serverStatus.Content = "Connected to server";
+                window.serverStatusElipse.Fill = new SolidColorBrush(Colors.Green);
                 connected = true;
                 receiving = true;
             } catch (Exception e)
             {
                 System.Diagnostics.Trace.WriteLine(e.Message);
-                window.serverStatus.Content = e.Message;
-                window.serverStatus.Visibility = Visibility.Visible;
-                
+                window.serverStatusElipse.Fill = new SolidColorBrush(Colors.Red);
+                //window.serverStatus.Content = e.Message;
+                //window.serverStatus.Visibility = Visibility.Visible;
+
             }
             
             //if(measurement == Acceleration || measurement == Orientation)

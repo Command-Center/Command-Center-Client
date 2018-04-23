@@ -8,7 +8,11 @@
         xmlns:local="clr-namespace:CommandApplication"
         xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
         mc:Ignorable="d"
-        WindowState="Maximized" Height="1557" Width="2034">
+        WindowState="Maximized" Height="1557" Width="2034"
+        Title="Command Center Application">
+    <Window.Resources>
+        <SolidColorBrush x:Key="TransparentGray" Color="#FFACA8A8" Opacity="0.1"/>
+    </Window.Resources>
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -29,23 +33,26 @@
             </Menu>
             <TextBox AcceptsReturn="True" />
         </DockPanel>
-        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,846,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
+        <Ellipse Width="10" Height="10" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="serverStatusElipse"></Ellipse>
+        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,1036,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
         <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
 
-        <StackPanel Margin="1510,25,41,31">
+        <StackPanel Margin="1510,25,41,31"  Background="{StaticResource TransparentGray}">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Label}">
-                    <Setter Property="Margin" Value="10,15,0,0"></Setter>
+                    <Setter Property="Margin" Value="10,10,0,0"></Setter>
                     <Setter Property="FontSize" Value="18"></Setter>
                     <Setter Property="HorizontalAlignment" Value="Left"></Setter>
                 </Style>
             </StackPanel.Resources>
             <!--<Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
             <Button Content="Calibrate" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Calibrate"/>-->
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Temperature: "/>
-                <Label Name="tempLabel" Content="42 C"/>
-            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Weather Data</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Temperature: "/>
+                    <Label Name="tempLabel" Content="42 C"/>
+                </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Temperature IR sensor: "/>
                 <Label Name="irLabel"/>
@@ -62,47 +69,56 @@
                 <Label Content="Pressure: "/>
                 <Label Name="presLabel"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="AccX: "/>
-                <Label Name="accxLabel"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="AccY: "/>
-                <Label Name="accyLabel"/>
+            <StackPanel Margin="0,0,0,30">
+                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Accelerations</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccX: "/>
+                    <Label Name="accxLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccY: "/>
+                    <Label Name="accyLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccZ: "/>
+                    <Label Name="acczLabel"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="AccZ: "/>
-                <Label Name="acczLabel"/>
+            <StackPanel Margin="0,0,0,30">
+                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Rotations</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Roll: "/>
+                    <Label Name="rollLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Pitch: "/>
+                    <Label Name="pitchLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Yaw: "/>
+                    <Label Name="yawLabel"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Roll: "/>
-                <Label Name="rollLabel"/>
+            <StackPanel Margin="0,0,0,30">
+                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">GPS Data</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Longitude: "/>
+                    <Label Name="longLabel" Content="0 N"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Latitude: "/>
+                    <Label Name="latLabel" Content="0 E"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Speed: "/>
+                    <Label Name="speedLabel" Content="0 kn"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Altitude: "/>
+                    <Label Name="altLabel" Content="100 m"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Pitch: "/>
-                <Label Name="pitchLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Yaw: "/>
-                <Label Name="yawLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Longitude: "/>
-                <Label Name="longLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Latitude: "/>
-                <Label Name="latLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Speed: "/>
-                <Label Name="speedLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Altitude: "/>
-                <Label Name="altLabel"/>
-            </StackPanel>
-
             <!--<StackPanel Orientation="Horizontal">
                 <Label Content="Yaw Calibrated: "/>
                 <Label Name="yawCalLabel"/>
