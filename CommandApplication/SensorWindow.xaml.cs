@@ -78,7 +78,9 @@ namespace CommandApplication
             socket_ir2 = new ClientWebSocket();
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
-            this.serverStatus.Visibility = Visibility.Hidden;
+            serverStatus.Visibility = Visibility.Hidden;
+
+            
 
             line_temp = new GLineSeries
             {
@@ -175,9 +177,9 @@ namespace CommandApplication
             StartReceiveFromServer(this, socket_ir2, IR2);
 
 
-            accXChart.Visibility = Visibility.Visible;
-            accYChart.Visibility = Visibility.Visible;
-            accZChart.Visibility = Visibility.Visible;
+            accXChart.Visibility = Visibility.Collapsed;
+            accYChart.Visibility = Visibility.Collapsed;
+            accZChart.Visibility = Visibility.Collapsed;
 
             rollChart.Visibility = Visibility.Visible;
             pitchChart.Visibility = Visibility.Visible;
@@ -527,6 +529,72 @@ namespace CommandApplication
                 //yawCalLabel.Content = yaw_temp;
                 //rollCalLabel.Content = roll_temp;
                 //pitchCalLabel.Content = pitch_temp;
+            }
+        }
+        private void Button_Check_Accx(object sender, RoutedEventArgs e)
+        {
+            if (accxCheck.IsChecked)
+            {
+                accXChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                accXChart.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Check_Accy(object sender, RoutedEventArgs e)
+        {
+            if (accyCheck.IsChecked)
+            {
+                accYChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                accYChart.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Check_Accz(object sender, RoutedEventArgs e)
+        {
+            if (acczCheck.IsChecked)
+            {
+                accZChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                accZChart.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Check_Yaw(object sender, RoutedEventArgs e)
+        {
+            if (yawCheck.IsChecked)
+            {
+                yawChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                yawChart.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Check_Pitch(object sender, RoutedEventArgs e)
+        {
+            if (pitchCheck.IsChecked)
+            {
+                pitchChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                pitchChart.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Check_Roll(object sender, RoutedEventArgs e)
+        {
+            if (rollCheck.IsChecked)
+            {
+                rollChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                rollChart.Visibility = Visibility.Collapsed;
             }
         }
     }

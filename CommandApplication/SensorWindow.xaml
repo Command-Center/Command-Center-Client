@@ -10,7 +10,26 @@
         mc:Ignorable="d"
         WindowState="Maximized" Height="1557" Width="2034">
     <Grid>
-        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="Connect" />
+                    <MenuItem Header="Disconnect" Click="Button_Disconnect" />
+                    <MenuItem Header="Calibrate" Click="Button_Calibrate"/>
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Graphs">
+                    <MenuItem Name="accxCheck" Header="Acceleration x" IsCheckable="True" IsChecked="False" Click="Button_Check_Accx"/>
+                    <MenuItem Name="accyCheck" Header="Acceleration y" IsCheckable="True" IsChecked="False" Click="Button_Check_Accy" />
+                    <MenuItem Name="acczCheck" Header="Acceleration z" IsCheckable="True" IsChecked="False" Click="Button_Check_Accz" />
+                    <MenuItem Name="pitchCheck" Header="Pitch" IsCheckable="True" IsChecked="True" Click="Button_Check_Pitch"/>
+                    <MenuItem Name="rollCheck" Header="Roll" IsCheckable="True" IsChecked="True" Click="Button_Check_Roll"/>
+                    <MenuItem Name="yawCheck" Header="Yaw" IsCheckable="True" IsChecked="True" Click="Button_Check_Yaw" />
+                </MenuItem>
+            </Menu>
+            <TextBox AcceptsReturn="True" />
+        </DockPanel>
+        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,846,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
         <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
 
         <StackPanel Margin="1510,25,41,31">
@@ -19,12 +38,10 @@
                     <Setter Property="Margin" Value="10,15,0,0"></Setter>
                     <Setter Property="FontSize" Value="18"></Setter>
                     <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                    
-                    
                 </Style>
             </StackPanel.Resources>
-            <Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
-            <Button Content="Calibrate" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Calibrate"/>
+            <!--<Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
+            <Button Content="Calibrate" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Calibrate"/>-->
             <StackPanel Orientation="Horizontal">
                 <Label Content="Temperature: "/>
                 <Label Name="tempLabel" Content="42 C"/>
@@ -37,7 +54,7 @@
                 <Label Content="Temperature IR sensor 2: "/>
                 <Label Name="ir2Label"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                 <Label Content="Humidity: "/>
                 <Label Name="humLabel"/>
             </StackPanel>
@@ -101,7 +118,8 @@
                 <Label Name="pitchCalLabel"/>
             </StackPanel>-->
         </StackPanel>
-        <StackPanel HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Height="1470" Width="1425">
+        <ScrollViewer Margin="0,25,0,0">
+            <StackPanel HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Height="1470" Width="1425">
             
             <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
                 <lvc:CartesianChart.AxisY>
@@ -136,89 +154,89 @@
                     <Setter Property="DisableAnimations" Value="True"></Setter>
                 </Style>
             </StackPanel.Resources>
-
-            <lvc:CartesianChart x:Name="accXChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccX" MinValue="-1" MaxValue="1">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart x:Name="accYChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccY" MinValue="-1" MaxValue="1">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time"/>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart x:Name="accZChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="AccZ" MinValue="-1" MaxValue="2">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart x:Name="rollChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart x:Name="pitchChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart x:Name="yawChart">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90">
-                        <lvc:Axis.Separator>
-                            <lvc:Separator IsEnabled="False" Step="20"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time" ></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
             
-            <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
+                <lvc:CartesianChart x:Name="accXChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="AccX" MinValue="-1" MaxValue="1">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
 
+                <lvc:CartesianChart x:Name="accYChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="AccY" MinValue="-1" MaxValue="1">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <lvc:CartesianChart x:Name="accZChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="AccZ" MinValue="-1" MaxValue="2">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <lvc:CartesianChart x:Name="rollChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <lvc:CartesianChart x:Name="pitchChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <lvc:CartesianChart x:Name="yawChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="20"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time" ></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
+            
         </StackPanel>
-
+        </ScrollViewer>
 
     </Grid>
 </Window>
