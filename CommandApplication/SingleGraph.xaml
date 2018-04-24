@@ -9,7 +9,7 @@
         Title="SingleGraph" Height="600" Width="600">
     <Grid>
         <StackPanel>
-            <Label Name="title" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Title</Label>
+            <Label Name="title" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24"></Label>
             <lvc:CartesianChart x:Name="chart" Height="500">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Acc." MinValue="-1" MaxValue="1">

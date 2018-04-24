@@ -486,13 +486,13 @@ namespace CommandApplication
             Byte[] bytes = encoding.GetBytes(str);
             return bytes;
         }
-        static string[] SplitXYZ(string resString)
+        public static string[] SplitXYZ(string resString)
         {
             var arr = resString.Split(null); //Whitespace split
             return arr;
         }
 
-        private static byte[] RemoveTrailingZeros(byte[] input)
+        public static byte[] RemoveTrailingZeros(byte[] input)
         {
             int res = 0;
             for(int i=input.Length - 1; i>=0 ; i--)
