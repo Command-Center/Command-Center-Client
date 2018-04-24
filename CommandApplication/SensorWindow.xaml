@@ -14,7 +14,15 @@
         <SolidColorBrush x:Key="TransparentGray" Color="#FFACA8A8" Opacity="0.1"/>
     </Window.Resources>
     <Grid>
-        <DockPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="60*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.ColumnSpan="2" Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="Connect" />
@@ -31,13 +39,13 @@
                     <MenuItem Name="yawCheck" Header="Yaw" IsCheckable="True" IsChecked="True" Click="Button_Check_Yaw" />
                 </MenuItem>
             </Menu>
-            <TextBox AcceptsReturn="True" />
+            <!--<TextBox AcceptsReturn="True" />-->
         </DockPanel>
         <Ellipse Width="10" Height="10" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="serverStatusElipse"></Ellipse>
         <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,1036,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
         <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
 
-        <StackPanel Margin="1100,25,41,31"  Background="{StaticResource TransparentGray}">
+        <StackPanel Background="{StaticResource TransparentGray}" Grid.Row="1" Grid.Column="1">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Margin" Value="10,10,0,0"></Setter>
@@ -134,8 +142,8 @@
                 <Label Name="pitchCalLabel"/>
             </StackPanel>-->
         </StackPanel>
-        <ScrollViewer Margin="0,25,0,0">
-            <StackPanel HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="1000">
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="1">
+            <StackPanel >
             
             <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
                 <lvc:CartesianChart.AxisY>
