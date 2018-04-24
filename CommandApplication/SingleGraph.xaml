@@ -10,9 +10,9 @@
     <Grid>
         <StackPanel>
             <Label Name="title" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24"></Label>
-            <lvc:CartesianChart x:Name="chart" Height="500">
+            <lvc:CartesianChart x:Name="chart" Height="500" DisableAnimations="True">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Acc." MinValue="-1" MaxValue="1">
+                    <lvc:Axis Title="Acc." MinValue="-1.2" MaxValue="0.3">
                         <lvc:Axis.Separator>
                             <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                         </lvc:Axis.Separator>

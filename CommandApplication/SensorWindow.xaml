@@ -37,18 +37,18 @@
         <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,1036,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
         <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
 
-        <StackPanel Margin="1510,25,41,31"  Background="{StaticResource TransparentGray}">
+        <StackPanel Margin="1100,25,41,31"  Background="{StaticResource TransparentGray}">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Margin" Value="10,10,0,0"></Setter>
-                    <Setter Property="FontSize" Value="18"></Setter>
+                    <Setter Property="FontSize" Value="16"></Setter>
                     <Setter Property="HorizontalAlignment" Value="Left"></Setter>
                 </Style>
             </StackPanel.Resources>
             <!--<Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
             <Button Content="Calibrate" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Calibrate"/>-->
-            <StackPanel Margin="0,0,0,10">
-                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Weather Data</Label>
+            <StackPanel Margin="0,0,0,5">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Weather Data</Label>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Temperature: "/>
                     <Label Name="tempLabel" Content="42 C"/>
@@ -70,8 +70,8 @@
                 <Label Name="presLabel"/>
             </StackPanel>
             </StackPanel>
-            <StackPanel Margin="0,0,0,30">
-                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Accelerations</Label>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Accelerations</Label>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="AccX: "/>
                     <Label Name="accxLabel"/>
@@ -85,8 +85,8 @@
                     <Label Name="acczLabel"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Margin="0,0,0,30">
-                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">Rotations</Label>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Rotations</Label>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Roll: "/>
                     <Label Name="rollLabel"/>
@@ -100,8 +100,8 @@
                     <Label Name="yawLabel"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Margin="0,0,0,30">
-                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold">GPS Data</Label>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">GPS Data</Label>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Longitude: "/>
                     <Label Name="longLabel" Content="0 N"/>
@@ -135,7 +135,7 @@
             </StackPanel>-->
         </StackPanel>
         <ScrollViewer Margin="0,25,0,0">
-            <StackPanel HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="1425">
+            <StackPanel HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="1000">
             
             <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
                 <lvc:CartesianChart.AxisY>
@@ -165,16 +165,16 @@
             </lvc:CartesianChart>-->
             <StackPanel.Resources>
                 <Style TargetType="{x:Type lvc:CartesianChart}">
-                    <Setter Property="Margin" Value="10,30,0,100"></Setter>
-                    <Setter Property="Height" Value="200"></Setter>
+                    <Setter Property="Margin" Value="10,30,0,50"></Setter>
+                    <Setter Property="Height" Value="150"></Setter>
                     <Setter Property="DisableAnimations" Value="True"></Setter>
                 </Style>
             </StackPanel.Resources>
                 <StackPanel>
-                    <Label Name="accXTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Acceleration X</Label>
+                    <Label Name="accXTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration X</Label>
                 <lvc:CartesianChart x:Name="accXChart">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="AccX" MinValue="-1" MaxValue="1">
+                        <lvc:Axis Title="AccX" MinValue="-1.2" MaxValue="-0.8">
                             <lvc:Axis.Separator>
                                 <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                             </lvc:Axis.Separator>
@@ -186,10 +186,10 @@
                 </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
-                    <Label Name="accYTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Acceleration Y</Label>
+                    <Label Name="accYTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Y</Label>
                     <lvc:CartesianChart x:Name="accYChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="AccY" MinValue="-1" MaxValue="1">
+                            <lvc:Axis Title="AccY" MinValue="-0.5" MaxValue="0.5">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -201,10 +201,10 @@
                     </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
-                    <Label Name="accZTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Acceleration Z</Label>
+                    <Label Name="accZTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Z</Label>
                     <lvc:CartesianChart x:Name="accZChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="AccZ" MinValue="-1" MaxValue="2">
+                            <lvc:Axis Title="AccZ" MinValue="-0.5" MaxValue="0">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -216,10 +216,10 @@
                     </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
-                    <Label Name="rollTile" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Roll</Label>
+                    <Label Name="rollTile" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Roll</Label>
                     <lvc:CartesianChart x:Name="rollChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
+                            <lvc:Axis Title="Roll" MinValue="-15" MaxValue="15">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -231,10 +231,10 @@
                     </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
-                    <Label Name="pitchTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Pitch</Label>
+                    <Label Name="pitchTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Pitch</Label>
                     <lvc:CartesianChart x:Name="pitchChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
+                            <lvc:Axis Title="Pitch" MinValue="-10" MaxValue="10">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -246,12 +246,12 @@
                     </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
-                    <Label Name="yawTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24">Yaw</Label>
+                    <Label Name="yawTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Yaw</Label>
                     <lvc:CartesianChart x:Name="yawChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Yaw" MinValue="-90" MaxValue="90">
+                            <lvc:Axis Title="Yaw" MinValue="-15" MaxValue="15">
                                 <lvc:Axis.Separator>
-                                    <lvc:Separator IsEnabled="False" Step="20"></lvc:Separator>
+                                    <lvc:Separator IsEnabled="False" Step="5"></lvc:Separator>
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>

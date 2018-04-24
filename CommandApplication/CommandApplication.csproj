@@ -112,6 +112,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CamWindow.xaml.cs">
+      <DependentUpon>CamWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseClass.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.Designer.cs">
@@ -134,6 +137,10 @@
     <Compile Include="SingleGraph.xaml.cs">
       <DependentUpon>SingleGraph.xaml</DependentUpon>
     </Compile>
+    <Page Include="CamWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -151,8 +151,8 @@ namespace CommandApplication
         }
         private void Show_Cam(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph("cam");
-            graphWindow.Show();
+            CamWindow camWindow = new CamWindow();
+            camWindow.Show();
         }
 
     }

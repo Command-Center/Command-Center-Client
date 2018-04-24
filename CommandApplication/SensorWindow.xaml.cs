@@ -19,9 +19,10 @@ namespace CommandApplication
     /// </summary>
     public partial class SensorWindow : Window
     {
-        
+
         //private const string UrlBase = "ws://129.242.174.142:8080/";
-        private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8080/";
+        //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
+        private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8091/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;

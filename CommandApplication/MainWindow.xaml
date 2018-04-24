@@ -34,7 +34,7 @@
             
         </DockPanel>
         
-        <Image Grid.Column="1" Grid.Row="1" x:Name="uitLogo" HorizontalAlignment="Right" Height="150"  Margin="0,30,30,0" VerticalAlignment="Top" Width="150" Source="Views/Logo_norsk_pos.png"/>
+        <Image Grid.Column="1" Grid.Row="1" x:Name="uitLogo" HorizontalAlignment="Right" Height="100"  Margin="0,30,30,0" VerticalAlignment="Top" Width="100" Source="Views/Logo_norsk_pos.png"/>
         <Image Grid.ColumnSpan="2" Grid.Row="2"  x:Name="ship" VerticalAlignment="Top" RenderTransformOrigin="0.348,1.135" Source="Views/ship.png"/>
         <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48">On-Land Maritime Monitoring and Decision Center</Label>
 

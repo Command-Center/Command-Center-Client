@@ -26,7 +26,8 @@ namespace CommandApplication
     /// </summary>
     public partial class SingleGraph : Window
     {
-        private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8080/";
+        //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
+        private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8091/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;
@@ -131,7 +132,7 @@ namespace CommandApplication
 
                     title.Content = "Acceleration X";
                     socket_acceleration = new ClientWebSocket();
-                    chart.Series.Add(lineX);
+                    chart.Series.Add(lineX); 
                     StartReceiveFromServer(this, socket_acceleration, Acceleration, 0);
                     break;
                 case "yacc":
