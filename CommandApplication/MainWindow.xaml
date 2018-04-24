@@ -68,7 +68,8 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button" Background="#FFA3E078">
+            <StackPanel Grid.RowSpan="2">
+            <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button" Background="#FFA3E078" Margin="0,0,0,10">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Rotations"/>
@@ -84,7 +85,7 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button2" Background="#FFA3E078">
+            <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button2" Background="#FFA3E078">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Accelerations"/>
@@ -99,13 +100,14 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
-            <Button Height="50" Width="50" Grid.Row="1" Grid.Column="1" Click="Show_Cam">
+            <Button Height="50" Width="50" Grid.Row="0" Grid.Column="0" Click="Show_Cam">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Source="Views/cam2.jpg"/>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+            </StackPanel>
         </Grid>
         
     </Grid>
