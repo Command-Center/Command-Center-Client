@@ -22,6 +22,7 @@
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
+            <Label Name="labelForCalibration" Visibility="Collapsed"></Label>
         </StackPanel>
     </Grid>
 </Window>

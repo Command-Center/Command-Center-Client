@@ -47,9 +47,8 @@ namespace CommandApplication
         private const string IR1 = "irtemp1";
         private const string IR2 = "irtemp2";
 
-        private int RollForCalibrating = 0;
-        private int PitchForCalibrating = 0;
-        private int YawForCalibrating = 0;
+        private int ValueForCalibrating = 0;
+        
 
         private static bool connected = false;
 
@@ -133,37 +132,37 @@ namespace CommandApplication
                     title.Content = "Acceleration X";
                     socket_acceleration = new ClientWebSocket();
                     chart.Series.Add(lineX);
-                    StartReceiveFromServer(this, socket_acceleration, Acceleration);
+                    StartReceiveFromServer(this, socket_acceleration, Acceleration, 0);
                     break;
                 case "yacc":
                     title.Content = "Acceleration Y";
                     socket_acceleration = new ClientWebSocket();
                     chart.Series.Add(lineY);
-                    StartReceiveFromServer(this, socket_acceleration, Acceleration);
+                    StartReceiveFromServer(this, socket_acceleration, Acceleration, 1);
                     break;
                 case "zacc":
                     title.Content = "Acceleration Z";
                     socket_acceleration = new ClientWebSocket();
                     chart.Series.Add(lineZ);
-                    StartReceiveFromServer(this, socket_acceleration, Acceleration);
+                    StartReceiveFromServer(this, socket_acceleration, Acceleration, 2);
                     break;
                 case "pitch":
                     title.Content = "Pitch";
                     socket_orientation = new ClientWebSocket();
                     chart.Series.Add(line_pitch);
-                    StartReceiveFromServer(this, socket_orientation, Orientation);
+                    StartReceiveFromServer(this, socket_orientation, Orientation, 0);
                     break;
                 case "roll":
                     title.Content = "Roll";
                     socket_orientation = new ClientWebSocket();
                     chart.Series.Add(line_roll);
-                    StartReceiveFromServer(this, socket_orientation, Orientation);
+                    StartReceiveFromServer(this, socket_orientation, Orientation, 1);
                     break;
                 case "yaw":
                     title.Content = "Yaw";
                     socket_orientation = new ClientWebSocket();
                     chart.Series.Add(line_yaw);
-                    StartReceiveFromServer(this, socket_orientation, Orientation);
+                    StartReceiveFromServer(this, socket_orientation, Orientation, 2);
                     break;
                 default:
                     break;
@@ -178,27 +177,23 @@ namespace CommandApplication
             Byte[] bytes = encoding.GetBytes(str);
             return bytes;
         }
-        //private void CalibrateOrientations()
-        //{
-        //    if (connected)
-        //    {
-        //        Leser siste verdi fra label i SensorWindow.xaml
-        //        Midlertidig. Snitt over tid?
-        //        OBS; Not Thread-safe
-        //        var roll_temp = Convert.ToInt32(rollLabel.Content);
-        //        var yaw_temp = Convert.ToInt32(yawLabel.Content);
-        //        var pitch_temp = Convert.ToInt32(pitchLabel.Content);
-        //        RollForCalibrating = roll_temp;
-        //        PitchForCalibrating = pitch_temp;
-        //        YawForCalibrating = yaw_temp;
+        private void CalibrateOrientations()
+        {
+            if (connected)
+            {
+               // Leser siste verdi fra label i SensorWindow.xaml
+               // Midlertidig.Snitt over tid?
+               //OBS; Not Thread-safe
+                var _temp = Convert.ToInt32(labelForCalibration.Content);
+                
+                ValueForCalibrating = _temp;
+                
 
-
-        //        yawCalLabel.Content = yaw_temp;
-        //        rollCalLabel.Content = roll_temp;
-        //        pitchCalLabel.Content = pitch_temp;
-        //    }
-        //}
-        private static async Task StartReceiveFromServer(SingleGraph window, ClientWebSocket socket, string measurement)
+                
+                
+            }
+        }
+        private static async Task StartReceiveFromServer(SingleGraph window, ClientWebSocket socket, string measurement, int value)
         {
 
 
@@ -290,15 +285,39 @@ namespace CommandApplication
                         //System.Diagnostics.Trace.WriteLine("orient: " + pitch + " " + roll + " " + yaw);
 
                         //Account for calibration
-                        pitch = pitch - window.PitchForCalibrating;
-                        if (pitch > 180) { pitch = pitch - 360; }
-                        roll = roll - window.RollForCalibrating;
-                        if (roll > 180) { roll = roll - 360; }
-                        yaw = yaw - window.YawForCalibrating;
-                        if (yaw > 180) { yaw = yaw - 360; }
+                        if (value == 0)
+                        {
+                            pitch = pitch - window.ValueForCalibrating;
+                            if (pitch > 180) { pitch = pitch - 360; }
+                        } else if (value == 1)
+                        {
+                            roll = roll - window.ValueForCalibrating;
+                            if (roll > 180)
+                            {
+                                roll = roll - 360;
+                            }
+                        }
+                        else
+                        {
+                            yaw = yaw - window.ValueForCalibrating;
+                            if (yaw > 180) { yaw = yaw - 360; }
+                        }
 
-                        
-
+                        window.Dispatcher.Invoke(new Action(() => {
+                            if (value == 0)
+                            {
+                                window.labelForCalibration.Content = pitch;
+                            }
+                            else if (value == 1)
+                            {
+                                window.labelForCalibration.Content = roll;
+                            }
+                            else
+                            {
+                                window.labelForCalibration.Content = yaw;
+                            }
+                            
+                        }));
 
 
                         //Automatic calibration on startup
@@ -307,16 +326,29 @@ namespace CommandApplication
                             //window.CalibrateOrientations();
 
                             //Account for calibration
-                            pitch = pitch - window.PitchForCalibrating;
-                            if (pitch > 180) { pitch = pitch - 360; }
-                            roll = roll - window.RollForCalibrating;
-                            if (roll > 180) { roll = roll - 360; }
-                            yaw = yaw - window.YawForCalibrating;
-                            if (yaw > 180) { yaw = yaw - 360; }
+                            if (value == 0)
+                            {
+                                pitch = pitch - window.ValueForCalibrating;
+                                if (pitch > 180) { pitch = pitch - 360; }
+                                window.labelForCalibration.Content = pitch;
+                            }
+                            else if (value == 1)
+                            {
+                                roll = roll - window.ValueForCalibrating;
+                                if (roll > 180)
+                                {
+                                    roll = roll - 360;
+                                }
+                                window.labelForCalibration.Content = roll;
+                            }
+                            else
+                            {
+                                yaw = yaw - window.ValueForCalibrating;
+                                if (yaw > 180) { yaw = yaw - 360; }
+                                window.labelForCalibration.Content = yaw;
+                            }
 
-                            //window.rollLabel.Content = roll;
-                            //window.pitchLabel.Content = pitch;
-                            //window.yawLabel.Content = yaw;
+                            
 
                             firstRecord = false;
                         }
@@ -328,9 +360,21 @@ namespace CommandApplication
                             try
                             {
                                 window.Dispatcher.Invoke(new Action(() => {
-                                    line_roll.Values.Add(roll);
-                                    line_pitch.Values.Add(pitch);
-                                    line_yaw.Values.Add(yaw);
+                                    
+                                    
+                                    
+                                    if (value == 0)
+                                    {
+                                        line_pitch.Values.Add(pitch);
+                                    }
+                                    else if (value == 1)
+                                    {
+                                        line_roll.Values.Add(roll);
+                                    }
+                                    else
+                                    {
+                                        line_yaw.Values.Add(yaw);
+                                    }
                                 }));
 
                             }
@@ -350,9 +394,22 @@ namespace CommandApplication
                             //var first_yaw = line_yaw.Values.DefaultIfEmpty(0).FirstOrDefault();
 
                             window.Dispatcher.Invoke(new Action(() => {
-                                line_roll.Values.Remove(first_roll);
-                                line_pitch.Values.Remove(first_pitch);
-                                line_yaw.Values.Remove(first_yaw);
+                                
+                                
+                                
+                                if (value == 0)
+                                {
+                                    line_pitch.Values.Remove(first_pitch);
+                                }
+                                else if (value == 1)
+                                {
+                                    line_roll.Values.Remove(first_roll);
+                                }
+                                else
+                                {
+                                    line_yaw.Values.Remove(first_yaw);
+                                }
+
                             }));
 
                         }
@@ -365,10 +422,21 @@ namespace CommandApplication
                         var y = res[1];
                         var z = res[2];
 
-                        //window.Dispatcher.Invoke(new Action(() => {
-                        //    window.accxLabel.Content = x;
-                        //    window.accyLabel.Content = y;
-                        //    window.acczLabel.Content = z;
+                        //window.Dispatcher.Invoke(new Action(() =>
+                        //{
+                            
+                        //    if (value == 0)
+                        //    {
+                        //        window.labelForCalibration.Content = x;
+                        //    }
+                        //    else if (value == 1)
+                        //    {
+                        //        window.labelForCalibration.Content = y;
+                        //    }
+                        //    else
+                        //    {
+                        //        window.labelForCalibration.Content = z;
+                        //    }
                         //}));
 
 
@@ -376,23 +444,46 @@ namespace CommandApplication
                         if (lineX.Values.Count < keepRecords)
                         {
                             window.Dispatcher.Invoke(new Action(() => {
-                                lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
-                                lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
-                                lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+                                if (value == 0)
+                                {
+                                    lineX.Values.Add(Convert.ToDouble(x, CultureInfo.InvariantCulture));
+                                }
+                                else if (value == 1)
+                                {
+                                    lineY.Values.Add(Convert.ToDouble(y, CultureInfo.InvariantCulture));
+                                }
+                                else
+                                {
+                                    lineZ.Values.Add(Convert.ToDouble(z, CultureInfo.InvariantCulture));
+                                }
+                                
+                                
+                                
                             }));
 
                         }
                         if (lineX.Values.Count > keepRecords - 1)
                         {
-                            var first_X = lineX.Values[0]; //TODO: Thread-safe?
-                            var first_Y = lineY.Values[0];
-                            var first_Z = lineZ.Values[0];
-
-
+                            
                             window.Dispatcher.Invoke(new Action(() => {
-                                lineX.Values.Remove(first_X);
-                                lineY.Values.Remove(first_Y);
-                                lineZ.Values.Remove(first_Z);
+                                if (value == 0)
+                                {
+                                    var first_X = lineX.Values[0];
+                                    lineX.Values.Remove(first_X);
+                                }
+                                else if (value == 1)
+                                {
+                                    var first_Y = lineY.Values[0];
+                                    lineY.Values.Remove(first_Y);
+                                }
+                                else
+                                {
+                                    var first_Z = lineZ.Values[0];
+                                    lineZ.Values.Remove(first_Z);
+                                }
+                                
+                                
+                                
                             }));
 
                         }
