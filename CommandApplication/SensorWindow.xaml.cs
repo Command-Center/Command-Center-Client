@@ -22,7 +22,7 @@ namespace CommandApplication
 
         //private const string UrlBase = "ws://129.242.174.142:8080/";
         //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
-        private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8091/";
+        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8091/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;
@@ -178,17 +178,17 @@ namespace CommandApplication
             StartReceiveFromServer(this, socket_ir2, IR2);
 
 
-            accXChart.Visibility = Visibility.Collapsed;
-            accYChart.Visibility = Visibility.Collapsed;
-            accZChart.Visibility = Visibility.Collapsed;
+            accXChart.Visibility = Visibility.Visible;
+            accYChart.Visibility = Visibility.Visible;
+            accZChart.Visibility = Visibility.Visible;
             
             rollChart.Visibility = Visibility.Visible;
             pitchChart.Visibility = Visibility.Visible;
             yawChart.Visibility = Visibility.Visible;
 
-            accXTitle.Visibility = Visibility.Collapsed;
-            accYTitle.Visibility = Visibility.Collapsed;
-            accZTitle.Visibility = Visibility.Collapsed;
+            accXTitle.Visibility = Visibility.Visible;
+            accYTitle.Visibility = Visibility.Visible;
+            accZTitle.Visibility = Visibility.Visible;
 
         }
 

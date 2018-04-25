@@ -9,6 +9,7 @@ namespace CommandApplication.Model
     class Constants
     {
         public const string ServerAddress = "129.242.174.142";
-        public const string ServerAddressDemo = "129.242.196.147";
+        //Student-network ip for the demonstration
+        //public const string ServerAddress = "129.242.196.147";
     }
 }

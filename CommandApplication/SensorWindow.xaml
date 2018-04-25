@@ -31,9 +31,9 @@
                     <MenuItem Header="_Exit" />
                 </MenuItem>
                 <MenuItem Header="_Graphs">
-                    <MenuItem Name="accxCheck" Header="Acceleration x" IsCheckable="True" IsChecked="False" Click="Button_Check_Accx"/>
-                    <MenuItem Name="accyCheck" Header="Acceleration y" IsCheckable="True" IsChecked="False" Click="Button_Check_Accy" />
-                    <MenuItem Name="acczCheck" Header="Acceleration z" IsCheckable="True" IsChecked="False" Click="Button_Check_Accz" />
+                    <MenuItem Name="accxCheck" Header="Acceleration x" IsCheckable="True" IsChecked="True" Click="Button_Check_Accx"/>
+                    <MenuItem Name="accyCheck" Header="Acceleration y" IsCheckable="True" IsChecked="True" Click="Button_Check_Accy" />
+                    <MenuItem Name="acczCheck" Header="Acceleration z" IsCheckable="True" IsChecked="True" Click="Button_Check_Accz" />
                     <MenuItem Name="pitchCheck" Header="Pitch" IsCheckable="True" IsChecked="True" Click="Button_Check_Pitch"/>
                     <MenuItem Name="rollCheck" Header="Roll" IsCheckable="True" IsChecked="True" Click="Button_Check_Roll"/>
                     <MenuItem Name="yawCheck" Header="Yaw" IsCheckable="True" IsChecked="True" Click="Button_Check_Yaw" />
@@ -182,7 +182,7 @@
                     <Label Name="accXTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration X</Label>
                 <lvc:CartesianChart x:Name="accXChart">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="AccX" MinValue="-1.2" MaxValue="-0.8">
+                        <lvc:Axis Title="AccX" MinValue="-2" MaxValue="2">
                             <lvc:Axis.Separator>
                                 <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                             </lvc:Axis.Separator>
@@ -197,7 +197,7 @@
                     <Label Name="accYTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Y</Label>
                     <lvc:CartesianChart x:Name="accYChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="AccY" MinValue="-0.5" MaxValue="0.5">
+                            <lvc:Axis Title="AccY" MinValue="-2" MaxValue="2">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -212,7 +212,7 @@
                     <Label Name="accZTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Z</Label>
                     <lvc:CartesianChart x:Name="accZChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="AccZ" MinValue="-0.5" MaxValue="0">
+                            <lvc:Axis Title="AccZ" MinValue="-2" MaxValue="2">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -227,7 +227,7 @@
                     <Label Name="rollTile" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Roll</Label>
                     <lvc:CartesianChart x:Name="rollChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Roll" MinValue="-15" MaxValue="15">
+                            <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -242,7 +242,7 @@
                     <Label Name="pitchTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Pitch</Label>
                     <lvc:CartesianChart x:Name="pitchChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Pitch" MinValue="-10" MaxValue="10">
+                            <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
                                 </lvc:Axis.Separator>
@@ -257,9 +257,9 @@
                     <Label Name="yawTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Yaw</Label>
                     <lvc:CartesianChart x:Name="yawChart">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Yaw" MinValue="-15" MaxValue="15">
+                            <lvc:Axis Title="Yaw" MinValue="-45" MaxValue="45">
                                 <lvc:Axis.Separator>
-                                    <lvc:Separator IsEnabled="False" Step="5"></lvc:Separator>
+                                    <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
