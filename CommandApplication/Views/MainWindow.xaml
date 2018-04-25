@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:CommandApplication"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="Command Center Application">
+        Title="Command Center Application" Height="1012" Width="1524">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -31,11 +31,11 @@
                 </MenuItem>
             </Menu>
             <!--<TextBox AcceptsReturn="True" />-->
-            
+
         </DockPanel>
-        
-        <Image Grid.Column="1" Grid.Row="1" x:Name="uitLogo" HorizontalAlignment="Right" Height="100"  Margin="0,30,30,0" VerticalAlignment="Top" Width="100" Source="Views/Logo_norsk_pos.png"/>
-        <Image Grid.ColumnSpan="2" Grid.Row="2"  x:Name="ship" VerticalAlignment="Top" RenderTransformOrigin="0.348,1.135" Source="Views/ship.png"/>
+
+        <Image Grid.Column="1" Grid.Row="1" x:Name="uitLogo" HorizontalAlignment="Right" Height="100"  Margin="0,30,30,0" VerticalAlignment="Top" Width="100" Source="/CommandApplication;component/Images/Logo_norsk_pos.png"/>
+        <Image Grid.ColumnSpan="2" Grid.Row="2"  x:Name="ship" VerticalAlignment="Top" RenderTransformOrigin="0.348,1.135" Source="/CommandApplication;component/Images/ship.png"/>
         <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48">On-Land Maritime Monitoring and Decision Center</Label>
 
         <!--<Button Content="Sensor Data" HorizontalAlignment="Left" Margin="83,82,0,0" VerticalAlignment="Top" Width="237" Click="Button_Click" RenderTransformOrigin="1.403,0.946"/>
@@ -69,47 +69,47 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <StackPanel Grid.RowSpan="2">
-            <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button" Background="#FFA3E078" Margin="0,0,0,10">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Rotations"/>
-                        <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
-                    </StackPanel>
-                </Button.Content>
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Pitch" Click="GotoPitch"/>
-                        <MenuItem Header="Roll" Click="GotoRoll"/>
-                        <MenuItem Header="Yaw" Click="GotoYaw"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
+                <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button" Background="#FFA3E078" Margin="0,0,0,10">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Rotations"/>
+                            <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.ContextMenu>
+                        <ContextMenu >
+                            <MenuItem Header="Pitch" Click="GotoPitch"/>
+                            <MenuItem Header="Roll" Click="GotoRoll"/>
+                            <MenuItem Header="Yaw" Click="GotoYaw"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
 
-            <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button2" Background="#FFA3E078">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Accelerations"/>
-                        <Path x:Name="BtnArrow2" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
-                    </StackPanel>
-                </Button.Content>
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="X direction" Click="GotoXacc"/>
-                        <MenuItem Header="Y direction" Click="GotoYacc"/>
-                        <MenuItem Header="Z direction" Click="GotoZacc"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-            <Button Height="50" Width="50" Grid.Row="0" Grid.Column="0" Click="Show_Cam">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Image Source="Views/cam2.jpg"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                <Button Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Top" ContextMenuService.IsEnabled="False" Click="Show_Menu_Button2" Background="#FFA3E078">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Accelerations"/>
+                            <Path x:Name="BtnArrow2" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.ContextMenu>
+                        <ContextMenu >
+                            <MenuItem Header="X direction" Click="GotoXacc"/>
+                            <MenuItem Header="Y direction" Click="GotoYacc"/>
+                            <MenuItem Header="Z direction" Click="GotoZacc"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+                <Button Height="50" Width="50" Grid.Row="0" Grid.Column="0" Click="Show_Cam">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/CommandApplication;component/Images/cam2.jpg"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
-    
+
 </Window>

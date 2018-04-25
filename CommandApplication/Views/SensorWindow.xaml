@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:CommandApplication"
         xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
         mc:Ignorable="d"
-        WindowState="Maximized" Height="1557" Width="2034"
+        WindowState="Maximized" Height="2037" Width="3784"
         Title="Command Center Application">
     <Window.Resources>
         <SolidColorBrush x:Key="TransparentGray" Color="#FFACA8A8" Opacity="0.1"/>
@@ -61,22 +61,22 @@
                     <Label Content="Temperature: "/>
                     <Label Name="tempLabel" Content="42 C"/>
                 </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Temperature IR sensor: "/>
-                <Label Name="irLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Temperature IR sensor 2: "/>
-                <Label Name="ir2Label"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
-                <Label Content="Humidity: "/>
-                <Label Name="humLabel"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Pressure: "/>
-                <Label Name="presLabel"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Temperature IR sensor: "/>
+                    <Label Name="irLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Temperature IR sensor 2: "/>
+                    <Label Name="ir2Label"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                    <Label Content="Humidity: "/>
+                    <Label Name="humLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Pressure: "/>
+                    <Label Name="presLabel"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Margin="0,0,0,10">
                 <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Accelerations</Label>
@@ -144,8 +144,8 @@
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="1">
             <StackPanel >
-            
-            <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
+
+                <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Celsius"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
@@ -171,27 +171,27 @@
                     <lvc:Axis Title="Time"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>-->
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type lvc:CartesianChart}">
-                    <Setter Property="Margin" Value="10,30,0,50"></Setter>
-                    <Setter Property="Height" Value="150"></Setter>
-                    <Setter Property="DisableAnimations" Value="True"></Setter>
-                </Style>
-            </StackPanel.Resources>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type lvc:CartesianChart}">
+                        <Setter Property="Margin" Value="10,30,0,50"></Setter>
+                        <Setter Property="Height" Value="150"></Setter>
+                        <Setter Property="DisableAnimations" Value="True"></Setter>
+                    </Style>
+                </StackPanel.Resources>
                 <StackPanel>
                     <Label Name="accXTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration X</Label>
-                <lvc:CartesianChart x:Name="accXChart">
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="AccX" MinValue="-2" MaxValue="2">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>
+                    <lvc:CartesianChart x:Name="accXChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="AccX" MinValue="-2" MaxValue="2">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
                 </StackPanel>
                 <StackPanel>
                     <Label Name="accYTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Y</Label>
@@ -269,8 +269,8 @@
                     </lvc:CartesianChart>
                 </StackPanel>
                 <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
-            
-        </StackPanel>
+
+            </StackPanel>
         </ScrollViewer>
 
     </Grid>

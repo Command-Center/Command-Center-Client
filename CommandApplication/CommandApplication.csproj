@@ -61,7 +61,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Unclebob-Spanish-Travel-Ship.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Unclebob-Spanish-Travel-Ship.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -112,7 +112,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CamWindow.xaml.cs">
+    <Compile Include="Model\SocketConnection.cs" />
+    <Compile Include="ViewModel\TestVM.cs" />
+    <Compile Include="Views\CamWindow.xaml.cs">
       <DependentUpon>CamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseClass.cs" />
@@ -126,22 +128,22 @@
     <Compile Include="Model\GPS.cs" />
     <Compile Include="Model\PositionReport.cs" />
     <Compile Include="Model\ShipAndVoyageData.cs" />
-    <Compile Include="MapWindow.xaml.cs">
+    <Compile Include="Views\MapWindow.xaml.cs">
       <DependentUpon>MapWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\TempChart.cs" />
     <Compile Include="Model\TemperatureReading.cs" />
-    <Compile Include="SensorWindow.xaml.cs">
+    <Compile Include="Views\SensorWindow.xaml.cs">
       <DependentUpon>SensorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SingleGraph.xaml.cs">
+    <Compile Include="Views\SingleGraph.xaml.cs">
       <DependentUpon>SingleGraph.xaml</DependentUpon>
     </Compile>
-    <Page Include="CamWindow.xaml">
+    <Page Include="Views\CamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -149,19 +151,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MapWindow.xaml">
+    <Page Include="Views\MapWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SensorWindow.xaml">
+    <Page Include="Views\SensorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SingleGraph.xaml">
+    <Page Include="Views\SingleGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,18 +204,18 @@
     <Content Include="aisdecode.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Views\Webcam-icon.png" />
-    <Resource Include="Views\webcam.png" />
-    <Resource Include="Views\ship.png" />
-    <Resource Include="Unclebob-Spanish-Travel-Ship.ico" />
-    <Resource Include="Views\Logo_norsk_pos.png" />
-    <Resource Include="Views\cam2.jpg" />
+    <Resource Include="Images\Webcam-icon.png" />
+    <Resource Include="Images\webcam.png" />
+    <Resource Include="Images\ship.png" />
+    <Resource Include="Images\Logo_norsk_pos.png" />
+    <Resource Include="Images\cam2.jpg" />
     <Content Include="Views\marinetrafficmap.html" />
     <Content Include="Views\openlayermap.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Views\Unclebob-Spanish-Travel-Ship.ico" />
+    <Resource Include="Images\Unclebob-Spanish-Travel-Ship.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
