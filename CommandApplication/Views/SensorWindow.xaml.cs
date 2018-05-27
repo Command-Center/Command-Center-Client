@@ -22,7 +22,7 @@ namespace CommandApplication
 
         //private const string UrlBase = "ws://129.242.174.142:8080/";
         //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
-        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8091/";
+        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8080/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;
