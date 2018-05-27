@@ -45,6 +45,7 @@ namespace CommandApplication
             //BrowserCam1.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8084").ToString();
             //BrowserCam2.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8083").ToString();
 
+            //Thread her?
             TestVM test = new TestVM();
 
         }

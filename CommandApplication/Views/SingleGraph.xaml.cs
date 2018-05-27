@@ -27,7 +27,7 @@ namespace CommandApplication
     public partial class SingleGraph : Window
     {
         //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
-        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8088/";
+        private static string UrlBase = "ws://" + Constants.ServerAddress + ":" + Constants.ServerPort + "/";
         private readonly ClientWebSocket socket_temp;
         private readonly ClientWebSocket socket_pressure;
         private readonly ClientWebSocket socket_humidity;

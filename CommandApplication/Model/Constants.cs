@@ -8,6 +8,7 @@ namespace CommandApplication.Model
 {
     class Constants
     {
+        public const int ServerPort = 8088;
         //public const string ServerAddress = "129.242.174.142";
         
         //Hjemme

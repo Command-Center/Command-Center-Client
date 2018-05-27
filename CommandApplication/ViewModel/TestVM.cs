@@ -11,7 +11,7 @@ namespace CommandApplication.ViewModel
 {
     class TestVM : INotifyPropertyChanged
     {
-        private const string UrlBase = "ws://" + Constants.ServerAddress + ":8091/";
+        private static string UrlBase = "ws://" + Constants.ServerAddress + ":" + Constants.ServerPort + "/";
         public delegate string MyFunc(string s);
         
 
@@ -23,13 +23,10 @@ namespace CommandApplication.ViewModel
             TemperatureSocket = ConnectToSocket(new Uri(UrlBase + "temp"), TemperatureSocket);
             PressureSocket = ConnectToSocket(new Uri(UrlBase + "pressure"), PressureSocket);
 
-            
-            SendMessage(TemperatureSocket);
-            
-            SendMessage(PressureSocket);
-           
 
-            
+            SendMessage(TemperatureSocket);
+
+            SendMessage(PressureSocket);
 
         }
 
@@ -44,7 +41,8 @@ namespace CommandApplication.ViewModel
         private async Task SendMessage(SocketConnection connection)
         {
             int TimeOutCount = 0;
-            while (!connection.Connected)
+            
+            while (connection.GetSocketConnection().State != System.Net.WebSockets.WebSocketState.Open)
             {
                 Thread.Sleep(1000);
                 TimeOutCount++;
@@ -54,7 +52,7 @@ namespace CommandApplication.ViewModel
                     break;
                 }
             }
-            if (connection.Connected)
+            if (connection.GetSocketConnection().State == System.Net.WebSockets.WebSocketState.Open)
             {
                 System.Diagnostics.Trace.WriteLine("Connected");
                 
@@ -65,7 +63,7 @@ namespace CommandApplication.ViewModel
 
         public void UpdateCallback(string s)
         {
-            System.Diagnostics.Trace.WriteLine(s);
+            System.Diagnostics.Trace.WriteLine("Callback: " + s);
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

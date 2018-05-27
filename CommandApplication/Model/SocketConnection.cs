@@ -22,12 +22,15 @@ namespace CommandApplication.Model
         {
             Socket = new ClientWebSocket();
         }
-
-        public async Task<bool> Connect(Uri uri)
+        public ClientWebSocket GetSocketConnection()
+        {
+            return Socket;
+        }
+        public bool Connect(Uri uri)
         {
             try
             {
-                await Socket.ConnectAsync(uri, System.Threading.CancellationToken.None);
+                Socket.ConnectAsync(uri, System.Threading.CancellationToken.None);
                 Connected = true;
                 Receiving = true;
                 
@@ -59,8 +62,10 @@ namespace CommandApplication.Model
         }
         public async Task Receivemessage(MyFunc callbackResults)
         {
+            System.Diagnostics.Trace.WriteLine("Try to receive..");
             while (Receiving)
             {
+                System.Diagnostics.Trace.WriteLine("Is receiving..");
                 string StringResult = "";
                 var RecvBuf = new byte[128]; //TODO: Should change based on response. GPS needs bigger than rest.
                 var RecvSeg = new ArraySegment<byte>(RecvBuf);
