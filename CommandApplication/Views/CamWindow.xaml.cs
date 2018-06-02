@@ -23,7 +23,7 @@ namespace CommandApplication
         public CamWindow()
         {
             InitializeComponent();
-            BrowserCam1.Address = new Uri("http://" + Constants.ServerAddress + ":8084").ToString();
+            //BrowserCam1.Address = new Uri("http://" + Constants.ServerAddress + ":8084").ToString();
             //BrowserCam2.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8083").ToString();
         }
     }

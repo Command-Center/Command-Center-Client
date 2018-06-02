@@ -33,7 +33,7 @@ namespace CommandApplication
                 Thread.CurrentThread.IsBackground = true;
                 GetAISData();
             }).Start();
-            Browser.Address = new Uri(String.Format("file:///{0}/Views/openlayermap.html", curDir)).ToString();
+            //Browser.Address = new Uri(String.Format("file:///{0}/Views/openlayermap.html", curDir)).ToString();
         }
 
         

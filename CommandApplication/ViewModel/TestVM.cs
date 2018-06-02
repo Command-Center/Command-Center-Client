@@ -13,7 +13,9 @@ namespace CommandApplication.ViewModel
     {
         private static string UrlBase = "ws://" + Constants.ServerAddress + ":" + Constants.ServerPort + "/";
         public delegate string MyFunc(string s);
-        
+        private const string Start = "START";
+        private const string Stop = "STOP";
+
 
         SocketConnection TemperatureSocket;
         SocketConnection PressureSocket;
@@ -24,9 +26,9 @@ namespace CommandApplication.ViewModel
             PressureSocket = ConnectToSocket(new Uri(UrlBase + "pressure"), PressureSocket);
 
 
-            SendMessage(TemperatureSocket);
+            SendMessage(TemperatureSocket, Start);
 
-            SendMessage(PressureSocket);
+            SendMessage(PressureSocket, Start);
 
         }
 
@@ -38,11 +40,11 @@ namespace CommandApplication.ViewModel
             return connection;
         }
 
-        private async Task SendMessage(SocketConnection connection)
+        private async Task SendMessage(SocketConnection connection, string message)
         {
             int TimeOutCount = 0;
             
-            while (connection.GetSocketConnection().State != System.Net.WebSockets.WebSocketState.Open)
+            while (connection.GetSocketConnection().State != System.Net.WebSockets.WebSocketState.Open) //Not connected
             {
                 Thread.Sleep(1000);
                 TimeOutCount++;
@@ -52,11 +54,11 @@ namespace CommandApplication.ViewModel
                     break;
                 }
             }
-            if (connection.GetSocketConnection().State == System.Net.WebSockets.WebSocketState.Open)
+            if (connection.GetSocketConnection().State == System.Net.WebSockets.WebSocketState.Open) //Connected
             {
                 System.Diagnostics.Trace.WriteLine("Connected");
                 
-                await connection.SendMessage("START");
+                await connection.SendMessage(message);
                 await connection.Receivemessage(UpdateCallback);
             }
         }

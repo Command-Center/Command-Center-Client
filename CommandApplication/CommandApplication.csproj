@@ -63,6 +63,14 @@
   <PropertyGroup>
     <ApplicationIcon>Images\Unclebob-Spanish-Travel-Ship.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -112,12 +120,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ConnectionAddress.cs" />
+    <Compile Include="Model\Irepository.cs" />
+    <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\SocketConnection.cs" />
     <Compile Include="ViewModel\TestVM.cs" />
     <Compile Include="Views\CamWindow.xaml.cs">
       <DependentUpon>CamWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseClass.cs" />
+    <Compile Include="DataContext.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.Designer.cs">
       <DependentUpon>201802180747207_Inital config.cs</DependentUpon>
@@ -215,7 +226,9 @@
     </Content>
     <Resource Include="Images\Unclebob-Spanish-Travel-Ship.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
