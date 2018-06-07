@@ -18,6 +18,10 @@ namespace CommandApplication.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            context.ConnectionAddresses.AddOrUpdate(
+                ca => ca.Address,
+                new ConnectionAddress { Id = 1, Address = "10.0.0.63", Comment = "Nettverk hjemme", isActive = true }
+                );
         }
     }
 }

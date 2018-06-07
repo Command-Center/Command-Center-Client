@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace CommandApplication.Model
 {
-    public interface Irepository
+    public interface IConnectionAddressRepository
     {
         void AddAddress(ConnectionAddress conAddress);
         void DeleteAddress(ConnectionAddress conAddress);
+        void EditAddress(ConnectionAddress conAddress);
+        ConnectionAddress GetActiveConnection();
         List<ConnectionAddress> ListAllAddresses();
     }
 }

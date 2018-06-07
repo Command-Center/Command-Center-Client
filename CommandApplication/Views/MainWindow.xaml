@@ -28,6 +28,7 @@
                     <MenuItem Header="_Exit" />
                 </MenuItem>
                 <MenuItem Header="_Tools">
+                    <MenuItem Header="Manage Connections" Click="Button_Manage_Connections" />
                 </MenuItem>
             </Menu>
             <!--<TextBox AcceptsReturn="True" />-->

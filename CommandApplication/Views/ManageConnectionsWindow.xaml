@@ -1,0 +1,48 @@
+﻿<Window x:Class="CommandApplication.Views.ManageConnectionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CommandApplication.Views"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="ManageConnectionsWindow" Height="600" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <DataGrid Name="connectionAddressTable" Grid.Row="1" Grid.Column="1" RowEditEnding="connectionAddressTable_RowEditEnding" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" IsReadOnly="True" Header="Id"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Address, NotifyOnTargetUpdated=True, Mode=TwoWay}" Header="IP address"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Comment, Mode=TwoWay, NotifyOnTargetUpdated=True}" Header="Comment"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Binding="{Binding isActive}" Header="Active"></DataGridCheckBoxColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Active" />
+                        </DataTemplate>
+                        
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="makeActiveBtn" Content="Make Active" Click="makeActiveBtn_Click"></Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+    </Grid>
+</Window>

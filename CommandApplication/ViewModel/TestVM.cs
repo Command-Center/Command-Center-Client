@@ -30,6 +30,11 @@ namespace CommandApplication.ViewModel
 
             SendMessage(PressureSocket, Start);
 
+            ////TEST
+            //DataContext db = new DataContext();
+            //List<ConnectionAddress> list = db.ConnectionAddresses.ToList().Where(ca => ca.Id == 2).SingleOrDefault();
+            //var entry = list[1];
+
         }
 
         private SocketConnection ConnectToSocket(Uri Uri, SocketConnection connection)

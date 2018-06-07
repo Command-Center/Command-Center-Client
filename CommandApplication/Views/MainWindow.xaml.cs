@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using CommandApplication.Model;
 using CommandApplication.ViewModel;
+using CommandApplication.Views;
 
 namespace CommandApplication
 {
@@ -106,6 +107,13 @@ namespace CommandApplication
                 //sensorWindow.WindowState = WindowState.Maximized;
             }
         }
+        private void Button_Manage_Connections(object sender, RoutedEventArgs e)
+        {
+            ManageConnectionsWindow manageConnectionsWindow = new ManageConnectionsWindow();
+            manageConnectionsWindow.Show();
+
+        }
+
         private void Show_Menu_Button(object sender, RoutedEventArgs e)
         {
             (sender as System.Windows.Controls.Button).ContextMenu.IsEnabled = true;
@@ -120,6 +128,7 @@ namespace CommandApplication
             (sender as System.Windows.Controls.Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
             (sender as System.Windows.Controls.Button).ContextMenu.IsOpen = true;
         }
+        
         private void GotoXacc(object sender, RoutedEventArgs e)
         {
             SingleGraph graphWindow = new SingleGraph("xacc");
