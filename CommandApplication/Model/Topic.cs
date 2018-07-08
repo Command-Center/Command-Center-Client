@@ -26,6 +26,20 @@ namespace CommandApplication.Model
         public const string HumidityTopic = "humidity";
         public const string PressureTopic = "pressure";
 
-
+        public static List<string> AllTopics = new List<string>()
+        {
+            XAccTopic,
+            YAccTopic,
+            ZAccTopic,
+            PitchTopic,
+            RollTopic,
+            YawTopic,
+            GpsTopic,
+            Ir1Topic,
+            Ir2Topic,
+            TemperatureTopic,
+            HumidityTopic,
+            PressureTopic
+        };
     }
 }

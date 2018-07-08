@@ -9,7 +9,7 @@
         xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
         mc:Ignorable="d"
         WindowState="Maximized" Height="1557" Width="2034"
-        Title="Command Center Application">
+        Title="Command Center Application" Closing="Window_Closing">
     <Window.Resources>
         <SolidColorBrush x:Key="TransparentGray" Color="#FFACA8A8" Opacity="0.1"/>
     </Window.Resources>

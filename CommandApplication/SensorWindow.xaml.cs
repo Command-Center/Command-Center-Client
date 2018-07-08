@@ -11,6 +11,7 @@ using CommandApplication.Model;
 using System.Globalization;
 using Newtonsoft.Json;
 using LiveCharts.Geared;
+using CommandApplication.ViewModel;
 
 namespace CommandApplication
 {
@@ -20,6 +21,7 @@ namespace CommandApplication
     public partial class SensorWindow : Window
     {
 
+        SensorsViewModel sensorsViewModel;
         //private const string UrlBase = "ws://129.242.174.142:8080/";
         //private const string UrlBase = "ws://" + Constants.ServerAddressDemo + ":8090/";
         private const string UrlBase = "ws://" + Constants.ServerAddress + ":8091/";
@@ -69,6 +71,9 @@ namespace CommandApplication
         public SensorWindow()
         {
             InitializeComponent();
+
+            DataContext = sensorsViewModel = new SensorsViewModel(this);
+
             socket_temp = new ClientWebSocket();
             socket_pressure = new ClientWebSocket();
             socket_humidity = new ClientWebSocket();
@@ -609,6 +614,11 @@ namespace CommandApplication
             {
                 rollChart.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Mqtt.Unsubscribe(Topic.AllTopics.ToArray());
         }
     }
 }

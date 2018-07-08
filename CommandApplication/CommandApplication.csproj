@@ -152,6 +152,7 @@
     <Compile Include="ConvertToObject.cs" />
     <Compile Include="Messages\PitchMessage.cs" />
     <Compile Include="Messages\RollMessage.cs" />
+    <Compile Include="ViewModel\SensorsViewModel.cs" />
     <Compile Include="ViewModel\SingleGraphViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Messages\YawMessage.cs" />
