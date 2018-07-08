@@ -62,7 +62,7 @@ namespace CommandApplication
             }
 
 
-            //run();
+            run();
         }
 
         internal void Unsubscribe()
@@ -77,20 +77,24 @@ namespace CommandApplication
                 {
                     string[] message;
                     incomingQueue.TryDequeue(out message);
-                    //Convert message to object.
-                    object res = ConvertToObject.convertToObject(message[0], message[1]);
-                    Xacc resObject = (Xacc)res;
+                    if(message != null)
+                    {
+                        //Convert message to object.
+                        object res = ConvertToObject.convertToObject(message[0], message[1]);
+                        Xacc resObject = (Xacc)res;
 
-                    //Plot the shit.
-                    if (lineSeries.Values.Count < keepRecords)
-                    {
-                        lineSeries.Values.Add(resObject.XAcceleration);
+                        //Plot the shit.
+                        if (lineSeries.Values.Count < keepRecords)
+                        {
+                            lineSeries.Values.Add(resObject.XAcceleration);
+                        }
+                        if (lineSeries.Values.Count > keepRecords - 1)
+                        {
+                            var firstValue = lineSeries.Values[0];
+                            lineSeries.Values.Remove(firstValue);
+                        }
                     }
-                    if (lineSeries.Values.Count > keepRecords - 1)
-                    {
-                        var firstValue = lineSeries.Values[0];
-                        lineSeries.Values.Remove(firstValue);
-                    }
+                    Thread.Sleep(100);
                 }
             }).Start();
             

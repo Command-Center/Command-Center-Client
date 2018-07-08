@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using CommandApplication.Messages;
+using CommandApplication.Model;
 
 namespace CommandApplication
 {
@@ -10,7 +11,7 @@ namespace CommandApplication
         {
             switch (topic)
             {
-                case "xacc":
+                case Topic.XAccTopic:
                     Xacc xacc = JsonConvert.DeserializeObject<Xacc>(message);
                     return xacc;
                 default:
