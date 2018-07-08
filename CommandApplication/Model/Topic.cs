@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CommandApplication.Model
+{
+    class Topic
+    {
+        public const string XAccTopic = "xacceleration";
+        public const string YAccTopic = "yacceleration";
+        public const string ZAccTopic = "zacceleration";
+
+        public const string PitchTopic = "pitch";
+        public const string RollTopic = "roll";
+        public const string YawTopic = "yaw";
+
+        public const string GpsTopic = "gps";
+
+        public const string Ir1Topic = "ir1";
+
+        public const string Ir2Topic = "ir2";
+
+        public const string TemperatureTopic = "temperature";
+        public const string HumidityTopic = "humidity";
+        public const string PressureTopic = "pressure";
+
+
+    }
+}

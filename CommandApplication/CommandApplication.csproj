@@ -136,15 +136,16 @@
     </Compile>
     <Compile Include="Model\TempChart.cs" />
     <Compile Include="Model\TemperatureReading.cs" />
+    <Compile Include="Model\Topic.cs" />
     <Compile Include="Mqtt.cs" />
     <Compile Include="SensorWindow.xaml.cs">
       <DependentUpon>SensorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SingleGraph3.xaml.cs">
+      <DependentUpon>SingleGraph3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleGraph.xaml.cs">
       <DependentUpon>SingleGraph.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SingleGraph2.xaml.cs">
-      <DependentUpon>SingleGraph2.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConvertToObject.cs" />
     <Compile Include="ViewModel\SingleGraphViewModel.cs" />
@@ -173,11 +174,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SingleGraph.xaml">
+    <Page Include="SingleGraph3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SingleGraph2.xaml">
+    <Page Include="SingleGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

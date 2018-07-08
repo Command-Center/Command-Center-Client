@@ -1,4 +1,5 @@
 ﻿using CommandApplication.Messages;
+using CommandApplication.Model;
 using LiveCharts;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
@@ -16,9 +17,9 @@ namespace CommandApplication
     {
         ConcurrentQueue<string[]> incomingQueue;
         
-        SingleGraph2 singleGraph;
+        SingleGraph singleGraph;
 
-        private string title = "TEST";
+        private string title;
         private string identifier;
 
         public SeriesCollection SeriesCollection { get; set; }
@@ -29,14 +30,14 @@ namespace CommandApplication
         private string[] topic;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SingleGraphViewModel(SingleGraph2 sg, string identifier)
+        public SingleGraphViewModel(SingleGraph sg, string identifier)
         {
             //Get queue based on identifier
             incomingQueue = Mqtt.GetIncomingQueue();
             
 
             this.identifier = identifier;
-            this.identifier = "xacc";
+            
             this.singleGraph = sg;
 
             lineSeries = new GLineSeries
@@ -45,12 +46,13 @@ namespace CommandApplication
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             singleGraph.chart.Series.Add(lineSeries);
 
             switch (identifier)
             {
-                case "xacc":
-                    topic = new string[] { "accx" };
+                case Topic.XAccTopic:
+                    topic = new string[] { Topic.XAccTopic };
                     Mqtt.Subscribe(topic);
                     lineSeries.Title = "AccX";
                     Title = setTitle(identifier);
@@ -98,7 +100,7 @@ namespace CommandApplication
             string title;
             switch (identifier)
             {
-                case "xacc":
+                case Topic.XAccTopic:
                     title = "Acceleration X";
                     break;
                 default:

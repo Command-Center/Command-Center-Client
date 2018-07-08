@@ -12,7 +12,7 @@ namespace CommandApplication
     public class Mqtt
     {
         private string brokerAddress = "127.0.0.1";
-        string[] subscriberList = new string[] { "#" };
+        //string[] subscriberList = new string[] { "#" };
         static ConcurrentQueue<string[]> incomingMessageQueue = new ConcurrentQueue<string[]>();
 
         internal bool IsConnected()
@@ -27,8 +27,8 @@ namespace CommandApplication
             mqttClient = new MqttClient(brokerAddress);
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
             string clientId = Guid.NewGuid().ToString();
-            Subscribe(subscriberList);
-            Publish("testtopic","message");
+            //Subscribe(subscriberList);
+            //Publish("testtopic","message");
         }
         
         public void Publish(string topic, string message)

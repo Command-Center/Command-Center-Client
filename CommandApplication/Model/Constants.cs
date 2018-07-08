@@ -11,5 +11,7 @@ namespace CommandApplication.Model
         public const string ServerAddress = "129.242.174.142";
         //Student-network ip for the demonstration
         //public const string ServerAddress = "129.242.196.147";
+
+        public const string MqttAddress = "";
     }
 }

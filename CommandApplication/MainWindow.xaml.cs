@@ -116,8 +116,8 @@ namespace CommandApplication
         }
         private void GotoXacc(object sender, RoutedEventArgs e)
         {
-            //SingleGraph graphWindow = new SingleGraph("xacc");
-            SingleGraph2 graphWindow = new SingleGraph2("xacc");
+            
+            SingleGraph graphWindow = new SingleGraph(Topic.XAccTopic);
             graphWindow.Show();
         }
         private void GotoYacc(object sender, RoutedEventArgs e)
