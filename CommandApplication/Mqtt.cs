@@ -20,7 +20,7 @@ namespace CommandApplication
             return mqttClient.IsConnected;
         }
 
-        private MqttClient mqttClient;
+        private static MqttClient mqttClient;
 
         public Mqtt()
         {
@@ -35,12 +35,16 @@ namespace CommandApplication
         {
             mqttClient.Publish(topic, Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         }
-        public void Subscribe(string[] topics)
+        public static void Subscribe(string[] topics)
         {
             mqttClient.Subscribe(topics, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
         }
-        static public ConcurrentQueue<string[]> GetIncomingQueue()
+        public static void Unsubscribe(string[] topic)
+        {
+            mqttClient.Unsubscribe(topic);
+        }
+        public static ConcurrentQueue<string[]> GetIncomingQueue()
         {
             return incomingMessageQueue;
         }

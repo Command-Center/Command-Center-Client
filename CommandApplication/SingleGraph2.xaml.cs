@@ -24,6 +24,13 @@ namespace CommandApplication
         {
             InitializeComponent();
             DataContext = singleGraphViewModel = new SingleGraphViewModel(this, identifier);
+
+            
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            singleGraphViewModel.Unsubscribe();
         }
     }
 }

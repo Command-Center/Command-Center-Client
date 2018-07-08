@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CommandApplication"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="SingleGraph2" Height="300" Width="300">
+        Title="SingleGraph2" Height="300" Width="300" Closing="Window_Closing">
     <Grid>
         <StackPanel>
             <Label Name="title" Content="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="32"></Label>
