@@ -17,7 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using CommandApplication.Model;
-
+using CommandApplication.ViewModel;
 
 namespace CommandApplication
 {
@@ -26,7 +26,8 @@ namespace CommandApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        MainViewModel mvm;
+           
         public MainWindow()
         {
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyDE-w-vFJxyw5W4HGqK435n46mSdNGUEys"));
@@ -44,8 +45,8 @@ namespace CommandApplication
             //BrowserCam.Address = new Uri("http://129.242.174.142:8081/").ToString();
             //BrowserCam1.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8084").ToString();
             //BrowserCam2.Address = new Uri("http://" + Constants.ServerAddressDemo + ":8083").ToString();
-            
 
+            DataContext = mvm = new MainViewModel();
 
         }
 
