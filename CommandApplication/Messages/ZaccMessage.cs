@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CommandApplication.Messages
 {
-    public struct Xacc
+    public struct ZaccMessage
     {
         public DateTime Datetime { get; set; }
-        public double XAcceleration { get; set; }
+        public double ZAcceleration { get; set; }
     }
 }

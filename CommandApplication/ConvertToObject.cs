@@ -12,7 +12,7 @@ namespace CommandApplication
             switch (topic)
             {
                 case Topic.XAccTopic:
-                    Xacc xacc = JsonConvert.DeserializeObject<Xacc>(message);
+                    YaccMessage xacc = JsonConvert.DeserializeObject<YaccMessage>(message);
                     return xacc;
                 default:
                     return null;

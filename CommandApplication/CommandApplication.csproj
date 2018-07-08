@@ -120,7 +120,9 @@
       <DependentUpon>CamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseClass.cs" />
-    <Compile Include="Messages\Xacc.cs" />
+    <Compile Include="Messages\ZaccMessage.cs" />
+    <Compile Include="Messages\YaccMessage.cs" />
+    <Compile Include="Messages\XaccMessage.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.cs" />
     <Compile Include="Migrations\201802180747207_Inital config.Designer.cs">
       <DependentUpon>201802180747207_Inital config.cs</DependentUpon>
@@ -148,8 +150,11 @@
       <DependentUpon>SingleGraph.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConvertToObject.cs" />
+    <Compile Include="Messages\PitchMessage.cs" />
+    <Compile Include="Messages\RollMessage.cs" />
     <Compile Include="ViewModel\SingleGraphViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Messages\YawMessage.cs" />
     <Page Include="CamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

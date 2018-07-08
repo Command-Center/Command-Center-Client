@@ -3,6 +3,7 @@ using CommandApplication.Model;
 using LiveCharts;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
@@ -79,25 +80,56 @@ namespace CommandApplication
                     incomingQueue.TryDequeue(out message);
                     if(message != null)
                     {
-                        //Convert message to object.
-                        object res = ConvertToObject.convertToObject(message[0], message[1]);
-                        Xacc resObject = (Xacc)res;
-
-                        //Plot the shit.
-                        if (lineSeries.Values.Count < keepRecords)
+                        var topic = message[0];
+                        var jsonMessage = message[1];
+                        
+                        switch (topic)
                         {
-                            lineSeries.Values.Add(resObject.XAcceleration);
+                            case Topic.XAccTopic:
+                                XaccMessage xacc = JsonConvert.DeserializeObject<XaccMessage>(jsonMessage);
+                                plottingMethod(xacc.XAcceleration);
+                                break;
+                            case Topic.YAccTopic:
+                                YaccMessage yacc = JsonConvert.DeserializeObject<YaccMessage>(jsonMessage);
+                                plottingMethod(yacc.YAcceleration);
+                                break;
+                            case Topic.ZAccTopic:
+                                ZaccMessage zacc = JsonConvert.DeserializeObject<ZaccMessage>(jsonMessage);
+                                plottingMethod(zacc.ZAcceleration);
+                                break;
+                            case Topic.PitchTopic:
+                                PitchMessage pitch = JsonConvert.DeserializeObject<PitchMessage>(jsonMessage);
+                                plottingMethod(pitch.Pitch);
+                                break;
+                            case Topic.RollTopic:
+                                RollMessage roll = JsonConvert.DeserializeObject<RollMessage>(jsonMessage);
+                                plottingMethod(roll.Roll);
+                                break;
+                            case Topic.YawTopic:
+                                YawMessage yaw = JsonConvert.DeserializeObject<YawMessage>(jsonMessage);
+                                plottingMethod(yaw.Yaw);
+                                break;
+                            default:
+                                break;
                         }
-                        if (lineSeries.Values.Count > keepRecords - 1)
-                        {
-                            var firstValue = lineSeries.Values[0];
-                            lineSeries.Values.Remove(firstValue);
-                        }
+                        
                     }
                     Thread.Sleep(100);
                 }
             }).Start();
             
+        }
+        private void plottingMethod(double value)
+        {
+            if (lineSeries.Values.Count < keepRecords)
+            {
+                lineSeries.Values.Add(value);
+            }
+            if (lineSeries.Values.Count > keepRecords - 1)
+            {
+                var firstValue = lineSeries.Values[0];
+                lineSeries.Values.Remove(firstValue);
+            }
         }
         private string setTitle(string identifier)
         {
@@ -107,8 +139,23 @@ namespace CommandApplication
                 case Topic.XAccTopic:
                     title = "Acceleration X";
                     break;
+                case Topic.YAccTopic:
+                    title = "Acceleration Y";
+                    break;
+                case Topic.ZAccTopic:
+                    title = "Acceleration Z";
+                    break;
+                case Topic.PitchTopic:
+                    title = "Pitch";
+                    break;
+                case Topic.RollTopic:
+                    title = "Roll";
+                    break;
+                case Topic.YawTopic:
+                    title = "Yaw";
+                    break;
                 default:
-                    title = "TEST2";
+                    title = "";
                     break;
             }
             return title;
