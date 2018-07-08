@@ -13,7 +13,7 @@ namespace CommandApplication
     {
         private string brokerAddress = "127.0.0.1";
         string[] subscriberList = new string[] { "#" };
-        ConcurrentQueue<string> incomingMessageQueue = new ConcurrentQueue<string>();
+        static ConcurrentQueue<string[]> incomingMessageQueue = new ConcurrentQueue<string[]>();
 
         internal bool IsConnected()
         {
@@ -27,22 +27,33 @@ namespace CommandApplication
             mqttClient = new MqttClient(brokerAddress);
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
             string clientId = Guid.NewGuid().ToString();
-            mqttClient.Subscribe(subscriberList, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE});
+            Subscribe(subscriberList);
             Publish("testtopic","message");
         }
-        private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
-        {
-            //Handle message
-            incomingMessageQueue.Enqueue(Encoding.UTF8.GetString(e.Message));
-        }
+        
         public void Publish(string topic, string message)
         {
             mqttClient.Publish(topic, Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         }
-        public ConcurrentQueue<string> GetIncomingQueue()
+        public void Subscribe(string[] topics)
+        {
+            mqttClient.Subscribe(topics, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
+        }
+        static public ConcurrentQueue<string[]> GetIncomingQueue()
         {
             return incomingMessageQueue;
         }
-        
+
+
+        private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            // If none wants the message: throw away.
+            // Else: enqueue.
+            var message = new string[] { e.Topic, Encoding.UTF8.GetString(e.Message) };
+            //Handle message
+            incomingMessageQueue.Enqueue(message);
+        }
+
     }
 }

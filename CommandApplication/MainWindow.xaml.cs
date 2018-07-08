@@ -30,16 +30,10 @@ namespace CommandApplication
            
         public MainWindow()
         {
-            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyDE-w-vFJxyw5W4HGqK435n46mSdNGUEys"));
+            //GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyDE-w-vFJxyw5W4HGqK435n46mSdNGUEys"));
             InitializeComponent();
-            string curDir = Directory.GetCurrentDirectory();
-            //mapNavi.Navigate(new Uri(String.Format("file:///{0}/Views/openlayermap.html", curDir)));
-            //var map = new StaticMapRequest();
-            //map.Center = new Location("1600 Pennsylvania Ave NW, Washington, DC 20500");
-            //map.Size = new System.Drawing.Size(400, 400);
-            //map.Zoom = 14;
-
-            //map.Scale = 2;
+            //string curDir = Directory.GetCurrentDirectory();
+            
             //mapImage.Source = new BitmapImage(map.ToUri());
             //media.Source = new Uri("http://129.242.174.142:8081/");
             //BrowserCam.Address = new Uri("http://129.242.174.142:8081/").ToString();
@@ -122,7 +116,8 @@ namespace CommandApplication
         }
         private void GotoXacc(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph("xacc");
+            //SingleGraph graphWindow = new SingleGraph("xacc");
+            SingleGraph2 graphWindow = new SingleGraph2("xacc");
             graphWindow.Show();
         }
         private void GotoYacc(object sender, RoutedEventArgs e)

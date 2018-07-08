@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,11 +13,12 @@ namespace CommandApplication.ViewModel
     {
         Mqtt mqtt;
         bool isConnected;
+        //ConcurrentQueue<string> incomingMessageQueue;
 
         public MainViewModel()
         {
             mqtt = new Mqtt();
-
+            //incomingMessageQueue = mqtt.GetIncomingQueue();
         }
         public bool IsConnected
         {
