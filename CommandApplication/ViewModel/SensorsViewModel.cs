@@ -38,6 +38,21 @@ namespace CommandApplication.ViewModel
 
         public SensorsViewModel(SensorWindow sensorWindow)
         {
+            lineX = new GLineSeries
+            {
+                Title = "AccX",
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            Graph graphXAcc = new Graph(this, sensorWindow, Topic.XAccTopic, lineX);
+
+
+
+            Graph graphYAcc = new Graph();
+            Graph graphZAcc = new Graph();
+
+
             incomingQueue = Mqtt.GetIncomingQueue();
             
 

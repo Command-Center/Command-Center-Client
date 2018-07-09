@@ -3,14 +3,8 @@ using LiveCharts;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace CommandApplication.Model
@@ -21,32 +15,48 @@ namespace CommandApplication.Model
 
         SingleGraph singleGraph;
 
-        //private string title;
-        //private string identifier;
-
         public SeriesCollection SeriesCollection { get; set; }
 
         static LineSeries lineSeries;
         private int keepRecords = 50;
         private bool running = true;
         private string[] topic;
-        //public event PropertyChangedEventHandler PropertyChanged;
         private SingleGraphViewModel sgvm;
+        private SensorWindow sensorWindow;
 
-        public Graph(SingleGraphViewModel sgvm, SingleGraph sg, string identifier)
+        public Graph(SingleGraphViewModel sgvm, SingleGraph sg, string identifier, LineSeries lineSeries)
         {
             //Get queue based on identifier
             incomingQueue = Mqtt.GetIncomingQueue();
             this.singleGraph = sg;
             this.sgvm = sgvm;
-            lineSeries = new GLineSeries
-            {
-                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
-                PointGeometry = null,
-                Fill = Brushes.Transparent
-            };
+            
 
             singleGraph.chart.Series.Add(lineSeries);
+
+            switch (identifier)
+            {
+                case Topic.XAccTopic:
+                    topic = new string[] { Topic.XAccTopic };
+                    Mqtt.Subscribe(topic);
+                    lineSeries.Title = "AccX";
+                    sgvm.Title = setTitle(identifier);
+                    break;
+                default:
+                    break;
+            }
+            run();
+        }
+        //Constructor for multiple sensor window
+        public Graph(SingleGraphViewModel sgvm, SensorWindow sw, string identifier, LineSeries lineSeries)
+        {
+            //Get queue based on identifier
+            incomingQueue = Mqtt.GetIncomingQueue();
+            this.sensorWindow = sw;
+            this.sgvm = sgvm;
+
+            // chose based on identifier
+            sensorWindow.accXChart.Series.Add(lineSeries);
 
             switch (identifier)
             {

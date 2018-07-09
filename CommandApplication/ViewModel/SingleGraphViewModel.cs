@@ -33,15 +33,16 @@ namespace CommandApplication
 
         public SingleGraphViewModel(SingleGraph sg, string identifier)
         {
+            lineSeries = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
 
-            Graph graph = new Graph(this, sg, identifier);
-
-
-
+            Graph graph = new Graph(this, sg, identifier, lineSeries);
             this.identifier = identifier;
-            
             this.singleGraph = sg;
-
         }
         
         internal void Unsubscribe()
