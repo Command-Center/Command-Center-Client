@@ -1,4 +1,5 @@
 ﻿using CommandApplication.Messages;
+using CommandApplication.ViewModel;
 using LiveCharts;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
@@ -22,6 +23,7 @@ namespace CommandApplication.Model
         private bool running = true;
         private string[] topic;
         private SingleGraphViewModel sgvm;
+        private SensorsViewModel svm;
         private SensorWindow sensorWindow;
 
         public Graph(SingleGraphViewModel sgvm, SingleGraph sg, string identifier, LineSeries lineSeries)
@@ -33,14 +35,30 @@ namespace CommandApplication.Model
             
 
             singleGraph.chart.Series.Add(lineSeries);
+            topic = new string[] { identifier };
+            sgvm.Title = setTitle(identifier);
+
+            Mqtt.Subscribe(topic);
 
             switch (identifier)
             {
                 case Topic.XAccTopic:
-                    topic = new string[] { Topic.XAccTopic };
-                    Mqtt.Subscribe(topic);
                     lineSeries.Title = "AccX";
-                    sgvm.Title = setTitle(identifier);
+                    break;
+                case Topic.YAccTopic:
+                    lineSeries.Title = "AccY";
+                    break;
+                case Topic.ZAccTopic:
+                    lineSeries.Title = "AccZ";
+                    break;
+                case Topic.RollTopic:
+                    lineSeries.Title = "Roll";
+                    break;
+                case Topic.PitchTopic:
+                    lineSeries.Title = "Pitch";
+                    break;
+                case Topic.YawTopic:
+                    lineSeries.Title = "Yaw";
                     break;
                 default:
                     break;
@@ -48,27 +66,47 @@ namespace CommandApplication.Model
             run();
         }
         //Constructor for multiple sensor window
-        public Graph(SingleGraphViewModel sgvm, SensorWindow sw, string identifier, LineSeries lineSeries)
+        public Graph(SensorsViewModel svm, SensorWindow sw, string identifier, LineSeries lineSeries)
         {
             //Get queue based on identifier
             incomingQueue = Mqtt.GetIncomingQueue();
             this.sensorWindow = sw;
-            this.sgvm = sgvm;
+            this.svm = svm;
 
-            // chose based on identifier
-            sensorWindow.accXChart.Series.Add(lineSeries);
+            topic = new string[] { Topic.XAccTopic };
+            svm.Title = setTitle(identifier);
+            Mqtt.Subscribe(topic);
 
             switch (identifier)
             {
                 case Topic.XAccTopic:
-                    topic = new string[] { Topic.XAccTopic };
-                    Mqtt.Subscribe(topic);
+                    sw.accXChart.Series.Add(lineSeries);
                     lineSeries.Title = "AccX";
-                    sgvm.Title = setTitle(identifier);
+                    break;
+                case Topic.YAccTopic:
+                    sw.accYChart.Series.Add(lineSeries);
+                    lineSeries.Title = "AccY";
+                    break;
+                case Topic.ZAccTopic:
+                    sw.accZChart.Series.Add(lineSeries);
+                    lineSeries.Title = "AccZ";
+                    break;
+                case Topic.RollTopic:
+                    sw.rollChart.Series.Add(lineSeries);
+                    lineSeries.Title = "Roll";
+                    break;
+                case Topic.PitchTopic:
+                    sw.pitchChart.Series.Add(lineSeries);
+                    lineSeries.Title = "Pitch";
+                    break;
+                case Topic.YawTopic:
+                    sw.yawChart.Series.Add(lineSeries);
+                    lineSeries.Title = "Yaw";
                     break;
                 default:
                     break;
             }
+            
             run();
         }
         private void run()
