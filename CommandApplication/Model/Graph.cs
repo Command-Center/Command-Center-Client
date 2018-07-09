@@ -18,10 +18,11 @@ namespace CommandApplication.Model
 
         public SeriesCollection SeriesCollection { get; set; }
 
-        static LineSeries lineSeries;
+        LineSeries LineSeries;
         private int keepRecords = 50;
         private bool running = true;
         private string[] topic;
+        private string identifier;
         private SingleGraphViewModel sgvm;
         private SensorsViewModel svm;
         private SensorWindow sensorWindow;
@@ -32,9 +33,10 @@ namespace CommandApplication.Model
             incomingQueue = Mqtt.GetIncomingQueue();
             this.singleGraph = sg;
             this.sgvm = sgvm;
-            
+            LineSeries = lineSeries;
+            this.identifier = identifier;
 
-            singleGraph.chart.Series.Add(lineSeries);
+            singleGraph.chart.Series.Add(LineSeries);
             topic = new string[] { identifier };
             sgvm.Title = setTitle(identifier);
 
@@ -43,22 +45,22 @@ namespace CommandApplication.Model
             switch (identifier)
             {
                 case Topic.XAccTopic:
-                    lineSeries.Title = "AccX";
+                    LineSeries.Title = "AccX";
                     break;
                 case Topic.YAccTopic:
-                    lineSeries.Title = "AccY";
+                    LineSeries.Title = "AccY";
                     break;
                 case Topic.ZAccTopic:
-                    lineSeries.Title = "AccZ";
+                    LineSeries.Title = "AccZ";
                     break;
                 case Topic.RollTopic:
-                    lineSeries.Title = "Roll";
+                    LineSeries.Title = "Roll";
                     break;
                 case Topic.PitchTopic:
-                    lineSeries.Title = "Pitch";
+                    LineSeries.Title = "Pitch";
                     break;
                 case Topic.YawTopic:
-                    lineSeries.Title = "Yaw";
+                    LineSeries.Title = "Yaw";
                     break;
                 default:
                     break;
@@ -72,36 +74,38 @@ namespace CommandApplication.Model
             incomingQueue = Mqtt.GetIncomingQueue();
             this.sensorWindow = sw;
             this.svm = svm;
+            LineSeries = lineSeries;
+            this.identifier = identifier;
 
-            topic = new string[] { Topic.XAccTopic };
+            topic = new string[] { identifier };
             svm.Title = setTitle(identifier);
             Mqtt.Subscribe(topic);
 
             switch (identifier)
             {
                 case Topic.XAccTopic:
-                    sw.accXChart.Series.Add(lineSeries);
-                    lineSeries.Title = "AccX";
+                    sensorWindow.accXChart.Series.Add(LineSeries);
+                    LineSeries.Title = "AccX";
                     break;
                 case Topic.YAccTopic:
-                    sw.accYChart.Series.Add(lineSeries);
-                    lineSeries.Title = "AccY";
+                    sensorWindow.accYChart.Series.Add(LineSeries);
+                    LineSeries.Title = "AccY";
                     break;
                 case Topic.ZAccTopic:
-                    sw.accZChart.Series.Add(lineSeries);
-                    lineSeries.Title = "AccZ";
+                    sensorWindow.accZChart.Series.Add(LineSeries);
+                    LineSeries.Title = "AccZ";
                     break;
                 case Topic.RollTopic:
-                    sw.rollChart.Series.Add(lineSeries);
-                    lineSeries.Title = "Roll";
+                    sensorWindow.rollChart.Series.Add(LineSeries);
+                    LineSeries.Title = "Roll";
                     break;
                 case Topic.PitchTopic:
-                    sw.pitchChart.Series.Add(lineSeries);
-                    lineSeries.Title = "Pitch";
+                    sensorWindow.pitchChart.Series.Add(LineSeries);
+                    LineSeries.Title = "Pitch";
                     break;
                 case Topic.YawTopic:
-                    sw.yawChart.Series.Add(lineSeries);
-                    lineSeries.Title = "Yaw";
+                    sensorWindow.yawChart.Series.Add(LineSeries);
+                    LineSeries.Title = "Yaw";
                     break;
                 default:
                     break;
@@ -121,35 +125,40 @@ namespace CommandApplication.Model
                         var topic = message[0];
                         var jsonMessage = message[1];
 
-                        switch (topic)
+                        
+                        if(topic == identifier)
                         {
-                            case Topic.XAccTopic:
-                                XaccMessage xacc = JsonConvert.DeserializeObject<XaccMessage>(jsonMessage);
-                                plottingMethod(xacc.XAcceleration);
-                                break;
-                            case Topic.YAccTopic:
-                                YaccMessage yacc = JsonConvert.DeserializeObject<YaccMessage>(jsonMessage);
-                                plottingMethod(yacc.YAcceleration);
-                                break;
-                            case Topic.ZAccTopic:
-                                ZaccMessage zacc = JsonConvert.DeserializeObject<ZaccMessage>(jsonMessage);
-                                plottingMethod(zacc.ZAcceleration);
-                                break;
-                            case Topic.PitchTopic:
-                                PitchMessage pitch = JsonConvert.DeserializeObject<PitchMessage>(jsonMessage);
-                                plottingMethod(pitch.Pitch);
-                                break;
-                            case Topic.RollTopic:
-                                RollMessage roll = JsonConvert.DeserializeObject<RollMessage>(jsonMessage);
-                                plottingMethod(roll.Roll);
-                                break;
-                            case Topic.YawTopic:
-                                YawMessage yaw = JsonConvert.DeserializeObject<YawMessage>(jsonMessage);
-                                plottingMethod(yaw.Yaw);
-                                break;
-                            default:
-                                break;
+                            switch (identifier)
+                            {
+                                case Topic.XAccTopic:
+                                    XaccMessage xacc = JsonConvert.DeserializeObject<XaccMessage>(jsonMessage);
+                                    plottingMethod(xacc.XAcceleration);
+                                    break;
+                                case Topic.YAccTopic:
+                                    YaccMessage yacc = JsonConvert.DeserializeObject<YaccMessage>(jsonMessage);
+                                    plottingMethod(yacc.YAcceleration);
+                                    break;
+                                case Topic.ZAccTopic:
+                                    ZaccMessage zacc = JsonConvert.DeserializeObject<ZaccMessage>(jsonMessage);
+                                    plottingMethod(zacc.ZAcceleration);
+                                    break;
+                                case Topic.PitchTopic:
+                                    PitchMessage pitch = JsonConvert.DeserializeObject<PitchMessage>(jsonMessage);
+                                    plottingMethod(pitch.Pitch);
+                                    break;
+                                case Topic.RollTopic:
+                                    RollMessage roll = JsonConvert.DeserializeObject<RollMessage>(jsonMessage);
+                                    plottingMethod(roll.Roll);
+                                    break;
+                                case Topic.YawTopic:
+                                    YawMessage yaw = JsonConvert.DeserializeObject<YawMessage>(jsonMessage);
+                                    plottingMethod(yaw.Yaw);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
+                        
 
                     }
                     Thread.Sleep(100);
@@ -159,14 +168,14 @@ namespace CommandApplication.Model
         }
         private void plottingMethod(double value)
         {
-            if (lineSeries.Values.Count < keepRecords)
+            if (LineSeries.Values.Count < keepRecords)
             {
-                lineSeries.Values.Add(value);
+                LineSeries.Values.Add(value);
             }
-            if (lineSeries.Values.Count > keepRecords - 1)
+            if (LineSeries.Values.Count > keepRecords - 1)
             {
-                var firstValue = lineSeries.Values[0];
-                lineSeries.Values.Remove(firstValue);
+                var firstValue = LineSeries.Values[0];
+                LineSeries.Values.Remove(firstValue);
             }
         }
         private string setTitle(string identifier)

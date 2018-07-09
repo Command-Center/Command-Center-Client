@@ -67,7 +67,7 @@ namespace CommandApplication
             var message = new string[] { e.Topic, Encoding.UTF8.GetString(e.Message) };
             //Handle message
             incomingMessageQueue.Enqueue(message);
-            System.Diagnostics.Trace.WriteLine("Mottatt: " + message);
+            //System.Diagnostics.Trace.WriteLine("Mottatt: " + message);
         }
 
     }

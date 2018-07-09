@@ -1,6 +1,7 @@
 ﻿using CommandApplication.Model;
 using LiveCharts;
 using LiveCharts.Geared;
+//using LiveCharts.Geared;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Concurrent;
@@ -34,21 +35,50 @@ namespace CommandApplication.ViewModel
         static LineSeries linePitch;
         static LineSeries lineYaw;
         private SensorWindow sensorWindow;
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SensorsViewModel(SensorWindow sensorWindow)
         {
-
+            
             this.sensorWindow = sensorWindow;
-            line_temp = line_pressure = line_humidity = lineX = lineY
-                = lineZ = lineRoll = linePitch = lineYaw =
-                new GLineSeries
-                {
-                    Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
-                    PointGeometry = null,
-                    Fill = Brushes.Transparent
-                };
+            
+            lineX = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            lineY = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            lineZ = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            lineRoll = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            linePitch = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
+            lineYaw = new GLineSeries
+            {
+                Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
+                PointGeometry = null,
+                Fill = Brushes.Transparent
+            };
 
             Graph graphXAcc = new Graph(this, sensorWindow, Topic.XAccTopic, lineX);
             Graph graphYAcc = new Graph(this, sensorWindow, Topic.YAccTopic, lineY);
@@ -63,7 +93,8 @@ namespace CommandApplication.ViewModel
 
         private void subscribeAllAndMakeVisible()
         {
-            Mqtt.Subscribe(Topic.AllTopics.ToArray());
+            //var list = Topic.AllTopics.ToArray();
+            //Mqtt.Subscribe(list);
 
             sensorWindow.accXChart.Visibility = Visibility.Visible;
             sensorWindow.accYChart.Visibility = Visibility.Visible;

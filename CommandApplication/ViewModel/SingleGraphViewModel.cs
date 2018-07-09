@@ -25,7 +25,7 @@ namespace CommandApplication
 
         public SeriesCollection SeriesCollection { get; set; }
 
-        static LineSeries lineSeries;
+        LineSeries lineSeries;
         private int keepRecords = 50;
         private bool running = true;
         private string[] topic;
