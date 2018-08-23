@@ -4,6 +4,7 @@ using LiveCharts;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Windows.Media;
@@ -35,6 +36,7 @@ namespace CommandApplication.Model
             this.sgvm = sgvm;
             LineSeries = lineSeries;
             this.identifier = identifier;
+            
 
             singleGraph.chart.Series.Add(LineSeries);
             topic = new string[] { identifier };
@@ -168,15 +170,18 @@ namespace CommandApplication.Model
         }
         private void plottingMethod(double value)
         {
-            if (LineSeries.Values.Count < keepRecords)
-            {
-                LineSeries.Values.Add(value);
-            }
-            if (LineSeries.Values.Count > keepRecords - 1)
-            {
-                var firstValue = LineSeries.Values[0];
-                LineSeries.Values.Remove(firstValue);
-            }
+            sensorWindow.Dispatcher.Invoke(new Action(() => {
+                if (LineSeries.Values.Count < keepRecords)
+                {
+                    LineSeries.Values.Add(value);
+                }
+                if (LineSeries.Values.Count > keepRecords - 1)
+                {
+                    var firstValue = LineSeries.Values[0];
+                    LineSeries.Values.Remove(firstValue);
+                }
+            }));
+            
         }
         private string setTitle(string identifier)
         {
