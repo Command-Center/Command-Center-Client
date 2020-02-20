@@ -59,7 +59,7 @@
                 <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Weather Data</Label>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Temperature: "/>
-                    <Label Name="tempLabel" Content="42 C"/>
+                    <Label Name="tempLabel"/>
                 </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Temperature IR sensor: "/>

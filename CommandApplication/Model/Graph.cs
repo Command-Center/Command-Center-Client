@@ -54,7 +54,7 @@ namespace CommandApplication.Model
 
             singleGraphWindow.chart.Series.Add(LineSeries);
             
-            sgvm.Title = setTitle(identifier);
+            sgvm.Title = SetTitle(identifier);
 
             Mqtt.Subscribe(topic);
 
@@ -107,7 +107,7 @@ namespace CommandApplication.Model
                 topic = new string[] { identifier_top };
             }
 
-            svm.Title = setTitle(identifier);
+            svm.Title = SetTitle(identifier);
             Mqtt.Subscribe(topic);
 
             switch (identifier)
@@ -142,6 +142,7 @@ namespace CommandApplication.Model
             
             Run();
         }
+
         private void Run()
         {
             new Thread(() => {
@@ -193,7 +194,6 @@ namespace CommandApplication.Model
                     Thread.Sleep(100);
                 }
             }).Start();
-
         }
 
         private void PlottingMethod(double value)
@@ -211,7 +211,8 @@ namespace CommandApplication.Model
             }));
             
         }
-        private string setTitle(string identifier)
+
+        private string SetTitle(string identifier)
         {
             string title;
             switch (identifier)

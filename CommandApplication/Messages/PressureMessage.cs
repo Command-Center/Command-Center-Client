@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace CommandApplication.Messages
 {
-    internal struct AccelerationMessage
+    class PressureMessage
     {
         public DateTime timestamp { get; set; }
-        public double z { get; set; }
 
-        public double y { get; set; }
-
-        public double x { get; set; }
+        public double value { get; set; }
     }
 }

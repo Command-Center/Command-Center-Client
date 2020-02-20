@@ -43,6 +43,7 @@ namespace CommandApplication
             mqttClient.Publish(topic, Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
             
         }
+
         public static void Subscribe(string[] topics)
         {
             mqttClient.Subscribe(topics, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
@@ -58,7 +59,6 @@ namespace CommandApplication
         {
             return incomingMessageQueue;
         }
-
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {

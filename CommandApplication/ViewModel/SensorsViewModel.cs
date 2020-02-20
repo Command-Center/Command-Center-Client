@@ -49,30 +49,35 @@ namespace CommandApplication.ViewModel
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             lineY = new GLineSeries
             {
                 Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             lineZ = new GLineSeries
             {
                 Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             lineRoll = new GLineSeries
             {
                 Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             linePitch = new GLineSeries
             {
                 Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
                 PointGeometry = null,
                 Fill = Brushes.Transparent
             };
+
             lineYaw = new GLineSeries
             {
                 Values = new GearedValues<double> { }.WithQuality(Quality.Medium),
@@ -87,6 +92,8 @@ namespace CommandApplication.ViewModel
             Graph graphRoll = new Graph(this, sensorWindow, Topic.RollTopic, lineRoll);
             Graph graphPitch = new Graph(this, sensorWindow, Topic.PitchTopic, linePitch);
             Graph graphYaw = new Graph(this, sensorWindow, Topic.YawTopic, lineYaw);
+
+            SideBarInfo sideBarInfo = new SideBarInfo(this, sensorWindow);
 
             subscribeAllAndMakeVisible();
         }

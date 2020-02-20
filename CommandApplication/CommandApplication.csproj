@@ -123,6 +123,8 @@
     <Compile Include="DatabaseClass.cs" />
     <Compile Include="Messages\AccelerationMessage.cs" />
     <Compile Include="Messages\OrientationMessage.cs" />
+    <Compile Include="Messages\PressureMessage.cs" />
+    <Compile Include="Messages\TemperatureMessage.cs" />
     <Compile Include="Messages\ZaccMessage.cs" />
     <Compile Include="Messages\YaccMessage.cs" />
     <Compile Include="Messages\XaccMessage.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Messages\PitchMessage.cs" />
     <Compile Include="Messages\RollMessage.cs" />
     <Compile Include="ViewModel\SensorsViewModel.cs" />
+    <Compile Include="ViewModel\SideBarInfo.cs" />
     <Compile Include="ViewModel\SingleGraphViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Messages\YawMessage.cs" />
