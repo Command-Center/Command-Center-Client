@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 
 namespace CommandApplication.Model
@@ -15,7 +16,7 @@ namespace CommandApplication.Model
     {
         ConcurrentQueue<string[]> incomingQueue;
 
-        SingleGraph singleGraph;
+        SingleGraphWindow singleGraphWindow;
 
         public SeriesCollection SeriesCollection { get; set; }
 
@@ -24,22 +25,35 @@ namespace CommandApplication.Model
         private bool running = true;
         private string[] topic;
         private string identifier;
+        private string identifier_top;
         private SingleGraphViewModel sgvm;
         private SensorsViewModel svm;
         private SensorWindow sensorWindow;
+        private Window windowToPlotOn;
 
-        public Graph(SingleGraphViewModel sgvm, SingleGraph sg, string identifier, LineSeries lineSeries)
+        public Graph(SingleGraphViewModel sgvm, SingleGraphWindow sgw, string identifier, LineSeries lineSeries)
         {
             //Get queue based on identifier
             incomingQueue = Mqtt.GetIncomingQueue();
-            this.singleGraph = sg;
+            this.singleGraphWindow = sgw;
+            this.windowToPlotOn = sgw;
             this.sgvm = sgvm;
             LineSeries = lineSeries;
             this.identifier = identifier;
             
+            if(identifier == "xacceleration" || identifier == "yacceleration" || identifier == "zacceleration")
+            {
+                identifier_top = "acceleration";
+                topic = new string[] { identifier_top };
+            }
+            else if (identifier == "pitch" || identifier == "yaw" || identifier == "roll")
+            {
+                identifier_top = "orientation";
+                topic = new string[] { identifier_top };
+            }
 
-            singleGraph.chart.Series.Add(LineSeries);
-            topic = new string[] { identifier };
+            singleGraphWindow.chart.Series.Add(LineSeries);
+            
             sgvm.Title = setTitle(identifier);
 
             Mqtt.Subscribe(topic);
@@ -67,19 +81,32 @@ namespace CommandApplication.Model
                 default:
                     break;
             }
-            run();
+
+            Run();
         }
+
         //Constructor for multiple sensor window
         public Graph(SensorsViewModel svm, SensorWindow sw, string identifier, LineSeries lineSeries)
         {
             //Get queue based on identifier
             incomingQueue = Mqtt.GetIncomingQueue();
             this.sensorWindow = sw;
+            this.windowToPlotOn = sw;
             this.svm = svm;
             LineSeries = lineSeries;
             this.identifier = identifier;
 
-            topic = new string[] { identifier };
+            if (identifier == "xacceleration" || identifier == "yacceleration" || identifier == "zacceleration")
+            {
+                identifier_top = "acceleration";
+                topic = new string[] { identifier_top };
+            }
+            else if (identifier == "pitch" || identifier == "yaw" || identifier == "roll")
+            {
+                identifier_top = "orientation";
+                topic = new string[] { identifier_top };
+            }
+
             svm.Title = setTitle(identifier);
             Mqtt.Subscribe(topic);
 
@@ -113,9 +140,9 @@ namespace CommandApplication.Model
                     break;
             }
             
-            run();
+            Run();
         }
-        private void run()
+        private void Run()
         {
             new Thread(() => {
                 while (running)
@@ -127,50 +154,51 @@ namespace CommandApplication.Model
                         var topic = message[0];
                         var jsonMessage = message[1];
 
-                        
-                        if(topic == identifier)
+                        if(topic == identifier_top)
                         {
+                            AccelerationMessage acc;
+                            OrientationMessage orient;
+
                             switch (identifier)
                             {
                                 case Topic.XAccTopic:
-                                    XaccMessage xacc = JsonConvert.DeserializeObject<XaccMessage>(jsonMessage);
-                                    plottingMethod(xacc.XAcceleration);
+                                    acc = JsonConvert.DeserializeObject<AccelerationMessage>(jsonMessage);
+                                    PlottingMethod(acc.x);
                                     break;
                                 case Topic.YAccTopic:
-                                    YaccMessage yacc = JsonConvert.DeserializeObject<YaccMessage>(jsonMessage);
-                                    plottingMethod(yacc.YAcceleration);
+                                    acc = JsonConvert.DeserializeObject<AccelerationMessage>(jsonMessage);
+                                    PlottingMethod(acc.y);
                                     break;
                                 case Topic.ZAccTopic:
-                                    ZaccMessage zacc = JsonConvert.DeserializeObject<ZaccMessage>(jsonMessage);
-                                    plottingMethod(zacc.ZAcceleration);
+                                    acc = JsonConvert.DeserializeObject<AccelerationMessage>(jsonMessage);
+                                    PlottingMethod(acc.z);
                                     break;
                                 case Topic.PitchTopic:
-                                    PitchMessage pitch = JsonConvert.DeserializeObject<PitchMessage>(jsonMessage);
-                                    plottingMethod(pitch.Pitch);
+                                    orient = JsonConvert.DeserializeObject<OrientationMessage>(jsonMessage);
+                                    PlottingMethod(orient.pitch);
                                     break;
                                 case Topic.RollTopic:
-                                    RollMessage roll = JsonConvert.DeserializeObject<RollMessage>(jsonMessage);
-                                    plottingMethod(roll.Roll);
+                                    orient = JsonConvert.DeserializeObject<OrientationMessage>(jsonMessage);
+                                    PlottingMethod(orient.roll);
                                     break;
                                 case Topic.YawTopic:
-                                    YawMessage yaw = JsonConvert.DeserializeObject<YawMessage>(jsonMessage);
-                                    plottingMethod(yaw.Yaw);
+                                    orient = JsonConvert.DeserializeObject<OrientationMessage>(jsonMessage);
+                                    PlottingMethod(orient.yaw);
                                     break;
                                 default:
                                     break;
                             }
                         }
-                        
-
                     }
                     Thread.Sleep(100);
                 }
             }).Start();
 
         }
-        private void plottingMethod(double value)
+
+        private void PlottingMethod(double value)
         {
-            sensorWindow.Dispatcher.Invoke(new Action(() => {
+            windowToPlotOn.Dispatcher.Invoke(new Action(() => {
                 if (LineSeries.Values.Count < keepRecords)
                 {
                     LineSeries.Values.Add(value);

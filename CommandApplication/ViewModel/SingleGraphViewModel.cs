@@ -18,7 +18,7 @@ namespace CommandApplication
     {
         ConcurrentQueue<string[]> incomingQueue;
 
-        SingleGraph singleGraph;
+        SingleGraphWindow singleGraph;
 
         private string title;
         private string identifier;
@@ -31,7 +31,7 @@ namespace CommandApplication
         private string[] topic;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SingleGraphViewModel(SingleGraph sg, string identifier)
+        public SingleGraphViewModel(SingleGraphWindow sg, string identifier)
         {
             lineSeries = new GLineSeries
             {
@@ -49,8 +49,6 @@ namespace CommandApplication
         {
             Mqtt.Unsubscribe(new string[] { identifier });
         }
-
-        
         
         public string Title
         {

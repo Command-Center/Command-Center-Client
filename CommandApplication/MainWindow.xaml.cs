@@ -101,33 +101,32 @@ namespace CommandApplication
         }
         private void GotoXacc(object sender, RoutedEventArgs e)
         {
-            
-            SingleGraph graphWindow = new SingleGraph(Topic.XAccTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.XAccTopic);
             graphWindow.Show();
         }
         private void GotoYacc(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph(Topic.YAccTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.YAccTopic);
             graphWindow.Show();
         }
         private void GotoZacc(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph(Topic.ZAccTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.ZAccTopic);
             graphWindow.Show();
         }
         private void GotoRoll(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph(Topic.RollTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.RollTopic);
             graphWindow.Show();
         }
         private void GotoPitch(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph(Topic.PitchTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.PitchTopic);
             graphWindow.Show();
         }
         private void GotoYaw(object sender, RoutedEventArgs e)
         {
-            SingleGraph graphWindow = new SingleGraph(Topic.YawTopic);
+            SingleGraphWindow graphWindow = new SingleGraphWindow(Topic.YawTopic);
             graphWindow.Show();
         }
         private void Show_Cam(object sender, RoutedEventArgs e)

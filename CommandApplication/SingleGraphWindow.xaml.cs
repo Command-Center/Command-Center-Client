@@ -17,10 +17,10 @@ namespace CommandApplication
     /// <summary>
     /// Interaction logic for SingleGraph.xaml
     /// </summary>
-    public partial class SingleGraph : Window
+    public partial class SingleGraphWindow : Window
     {
         SingleGraphViewModel singleGraphViewModel;
-        public SingleGraph(string identifier)
+        public SingleGraphWindow(string identifier)
         {
             InitializeComponent();
             DataContext = singleGraphViewModel = new SingleGraphViewModel(this, identifier);

@@ -8,7 +8,7 @@ namespace CommandApplication
 {
     public class Mqtt
     {
-        private const string brokerAddress = "127.0.0.1";
+        private const string brokerAddress = "192.168.0.15";
         //string[] subscriberList = new string[] { "#" };
         static ConcurrentQueue<string[]> incomingMessageQueue = new ConcurrentQueue<string[]>();
         private static MqttClient mqttClient;
@@ -52,7 +52,7 @@ namespace CommandApplication
         public static void Unsubscribe(string[] topic)
         {
             mqttClient.Unsubscribe(topic);
-            System.Diagnostics.Trace.WriteLine("Unsubscriebd");
+            System.Diagnostics.Trace.WriteLine("Unsubscribed");
         }
         public static ConcurrentQueue<string[]> GetIncomingQueue()
         {

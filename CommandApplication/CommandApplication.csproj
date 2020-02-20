@@ -121,6 +121,8 @@
       <DependentUpon>CamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseClass.cs" />
+    <Compile Include="Messages\AccelerationMessage.cs" />
+    <Compile Include="Messages\OrientationMessage.cs" />
     <Compile Include="Messages\ZaccMessage.cs" />
     <Compile Include="Messages\YaccMessage.cs" />
     <Compile Include="Messages\XaccMessage.cs" />
@@ -145,8 +147,8 @@
     <Compile Include="SensorWindow.xaml.cs">
       <DependentUpon>SensorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SingleGraph.xaml.cs">
-      <DependentUpon>SingleGraph.xaml</DependentUpon>
+    <Compile Include="SingleGraphWindow.xaml.cs">
+      <DependentUpon>SingleGraphWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConvertToObject.cs" />
     <Compile Include="Messages\PitchMessage.cs" />
@@ -179,7 +181,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SingleGraph.xaml">
+    <Page Include="SingleGraphWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

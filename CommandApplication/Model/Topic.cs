@@ -11,10 +11,12 @@ namespace CommandApplication.Model
         public const string XAccTopic = "xacceleration";
         public const string YAccTopic = "yacceleration";
         public const string ZAccTopic = "zacceleration";
+        public const string AccelerationTopic = "acceleration";
 
         public const string PitchTopic = "pitch";
         public const string RollTopic = "roll";
         public const string YawTopic = "yaw";
+        public const string OrientationTopic = "orientation";
 
         public const string GpsTopic = "gps";
 
@@ -39,7 +41,9 @@ namespace CommandApplication.Model
             Ir2Topic,
             TemperatureTopic,
             HumidityTopic,
-            PressureTopic
+            PressureTopic,
+            AccelerationTopic,
+            OrientationTopic
         };
     }
 }
