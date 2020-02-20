@@ -21,11 +21,12 @@ namespace CommandApplication
             base.OnStartup(e);
 
             MainWindow mainWindow = new MainWindow();
-            
-            System.Diagnostics.Trace.WriteLine(Screen.AllScreens.Length);
+
+            var numberOfScreens = Screen.AllScreens.Length;
+            System.Diagnostics.Trace.WriteLine(numberOfScreens);
             if (Screen.AllScreens.Length > 1)
             {
-                Screen s2 = Screen.AllScreens[2];
+                Screen s2 = Screen.AllScreens[numberOfScreens - 1];
                 Rectangle r2 = s2.WorkingArea;
                 mainWindow.WindowState = WindowState.Normal;
                 mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
