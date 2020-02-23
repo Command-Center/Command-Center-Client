@@ -1,0 +1,277 @@
+﻿<Window x:Class="CommandApplication.SensorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:local="clr-namespace:CommandApplication"
+        mc:Ignorable="d"
+        WindowState="Maximized" Height="1557" Width="2034"
+        Title="Command Center Application" Closing="Window_Closing">
+    <Window.Resources>
+        <SolidColorBrush x:Key="TransparentGray" Color="#FFACA8A8" Opacity="0.1"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="60*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.ColumnSpan="2" Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="Connect" />
+                    <MenuItem Header="Disconnect" Click="Button_Disconnect" />
+                    <MenuItem Header="Calibrate" Click="Button_Calibrate"/>
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Graphs">
+                    <MenuItem Name="accxCheck" Header="Acceleration x" IsCheckable="True" IsChecked="True" Click="Button_Check_Accx"/>
+                    <MenuItem Name="accyCheck" Header="Acceleration y" IsCheckable="True" IsChecked="True" Click="Button_Check_Accy" />
+                    <MenuItem Name="acczCheck" Header="Acceleration z" IsCheckable="True" IsChecked="True" Click="Button_Check_Accz" />
+                    <MenuItem Name="pitchCheck" Header="Pitch" IsCheckable="True" IsChecked="True" Click="Button_Check_Pitch"/>
+                    <MenuItem Name="rollCheck" Header="Roll" IsCheckable="True" IsChecked="True" Click="Button_Check_Roll"/>
+                    <MenuItem Name="yawCheck" Header="Yaw" IsCheckable="True" IsChecked="True" Click="Button_Check_Yaw" />
+                </MenuItem>
+            </Menu>
+            <!--<TextBox AcceptsReturn="True" />-->
+        </DockPanel>
+        <Ellipse Width="10" Height="10" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="serverStatusElipse"></Ellipse>
+        <Label Name="serverStatus" Content="" HorizontalAlignment="Left" Margin="1510,1036,0,0" VerticalAlignment="Top" Height="64" Width="451" FontSize="18" FontWeight="Bold" Background="White" Foreground="#FFEE1616"/>
+        <!--<ListBox Name="listTemp" HorizontalAlignment="Left" Height="293" Margin="53,136,0,0" VerticalAlignment="Top" Width="180"/>-->
+
+        <StackPanel Background="{StaticResource TransparentGray}" Grid.Row="1" Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Margin" Value="10,10,0,0"></Setter>
+                    <Setter Property="FontSize" Value="16"></Setter>
+                    <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <!--<Button Content="Disconnect" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Disconnect"/>
+            <Button Content="Calibrate" HorizontalAlignment="Left" Margin="287,156,0,0" VerticalAlignment="Top" Width="75" Click="Button_Calibrate"/>-->
+            <StackPanel Margin="0,0,0,5">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Weather Data</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Temperature: "/>
+                    <Label Name="tempLabel"/>
+                </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Temperature IR sensor: "/>
+                <Label Name="irLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Temperature IR sensor 2: "/>
+                <Label Name="ir2Label"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                <Label Content="Humidity: "/>
+                <Label Name="humLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Pressure: "/>
+                <Label Name="presLabel"/>
+            </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Accelerations</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccX: "/>
+                    <Label Name="accxLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccY: "/>
+                    <Label Name="accyLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="AccZ: "/>
+                    <Label Name="acczLabel"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Rotations</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Roll: "/>
+                    <Label Name="rollLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Pitch: "/>
+                    <Label Name="pitchLabel"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Yaw: "/>
+                    <Label Name="yawLabel"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <Label HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">GPS Data</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Longitude: "/>
+                    <Label Name="longLabel" Content="0 N"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Latitude: "/>
+                    <Label Name="latLabel" Content="0 E"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Speed: "/>
+                    <Label Name="speedLabel" Content="0 kn"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Altitude: "/>
+                    <Label Name="altLabel" Content="100 m"/>
+                </StackPanel>
+            </StackPanel>
+            <!--<StackPanel Orientation="Horizontal">
+                <Label Content="Yaw Calibrated: "/>
+                <Label Name="yawCalLabel"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Roll Calibrated: "/>
+                <Label Name="rollCalLabel"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Pitch Calibrated: "/>
+                <Label Name="pitchCalLabel"/>
+            </StackPanel>-->
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="1">
+            <StackPanel >
+            
+            <!--<lvc:CartesianChart x:Name="tempChart" Margin="70,100,10,100" Height="190" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Celsius"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+            <lvc:CartesianChart x:Name="presChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Pressure"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+            
+            <lvc:CartesianChart x:Name="humChart" Margin="100" Height="200" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Humidity"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>-->
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type lvc:CartesianChart}">
+                    <Setter Property="Margin" Value="10,30,0,50"></Setter>
+                    <Setter Property="Height" Value="150"></Setter>
+                    <Setter Property="DisableAnimations" Value="True"></Setter>
+                </Style>
+            </StackPanel.Resources>
+                <StackPanel>
+                    <Label Name="accXTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration X</Label>
+                <lvc:CartesianChart x:Name="accXChart">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="AccX" MinValue="-2" MaxValue="2">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="accYTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Y</Label>
+                    <lvc:CartesianChart x:Name="accYChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="AccY" MinValue="-2" MaxValue="2">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time"/>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="accZTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Acceleration Z</Label>
+                    <lvc:CartesianChart x:Name="accZChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="AccZ" MinValue="-2" MaxValue="2">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="0.5"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="rollTile" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Roll</Label>
+                    <lvc:CartesianChart x:Name="rollChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Roll" MinValue="-45" MaxValue="45">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="pitchTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Pitch</Label>
+                    <lvc:CartesianChart x:Name="pitchChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Pitch" MinValue="-45" MaxValue="45">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="yawTitle" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20">Yaw</Label>
+                    <lvc:CartesianChart x:Name="yawChart">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Yaw" MinValue="-45" MaxValue="45">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator IsEnabled="False" Step="10"></lvc:Separator>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time" ></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <!--<lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="-66,-230,-360,0" />-->
+            
+        </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
